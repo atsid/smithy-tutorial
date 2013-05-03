@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html>
+<head>
+    <title>Smithy Tutorial</title>
+    <link id="themeStyles" rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/claro/claro.css">
+    <link id="applicationStyles" rel="stylesheet" href="css/style.css">
+    <style type="text/css"></style>
+    <script>
+        // dojo configuration
+        var path = location.pathname.replace(/\/[^/]+$/, '');
+        dojoConfig = {
+            async: true,
+            paths: {
+                "smithy/Query": '../dojox/json/query',
+                "application": path + '/'
+            }
+        };
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js"></script>
+    <script src="//atsid.github.io/releases/smithy-0.1.1-min.js"></script>
+    <script src="//atsid.github.io/releases/bullhorn-1.0.0-min.js"></script>
+    <script src="//atsid.github.io/releases/circuits-1.0.1-min.js"></script>
+    <script src="//atsid.github.io/releases/schematic-1.0.1-min.js"></script>
+    <script>
+        require([
+            "application/Gadgets",
+            "smithy/AmdResolver",
+            "smithy/GadgetSpace",
+            "smithy/dojoviews/DojoViewFactory",
+            "smithy/GadgetFactory",
+            "bullhorn/ChannelFactory"
+        ], function (
+                Gadgets,
+                AmdResolver,
+                GadgetSpace,
+                DojoViewFactory,
+                GadgetFactory,
+                ChannelFactory
+        ) {
+            var vfact, gfact, cfact, application;
+
+            // setup factories for gadget space configuration
+            gfact = new GadgetFactory({
+                resolver: new AmdResolver({
+                    path: "application/gadgets/",
+                    synchronous: true
+                }).resolver
+            });
+            // use dojo views rooted at a particular div for the main window
+            vfact = new DojoViewFactory({root: 'gadgetSpace'});
+
+            // setup channel factory to find channels.
+            cfact = new ChannelFactory({
+                resolver: new AmdResolver({
+                    path: "application/schema/",
+                    synchronous: true
+                }).resolver
+            });
+
+            // instantiate gadget space
+            application = new GadgetSpace({
+                async: false,
+                gadgetFactory: gfact,
+                viewFactory: vfact,
+                channelFactory: cfact,
+                extendedWindowConfig: {
+                    url: "ExtendedWindow.html"
+                },
+                useWebStorageForSlag: "session"
+            });
+
+            // register gadgets with gadget space.
+            application.addGadget("TitleGadget", {
+                gadget: "TitleGadget",
+                data: {applicationTitle: "Smithy Tutorial"}
+            });
+            application.addGadget("TestGadget", {
+                gadget: "WidgetTestGadget"
+            });
+
+            // load gadgets in the first window
+            application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
+            application.loadGadgetTo("TestGadget", "windows[0]/center", true);
+
+            // render app
+            application.render();
+         });
+    </script>
+
+</head>
+<body class="claro">
+   <div id="gadgetSpace"></div>
+</body>
+</html>
