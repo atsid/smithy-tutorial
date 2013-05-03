@@ -13,7 +13,7 @@
             async: true,
             paths: {
                 "smithy/Query": '../dojox/json/query',
-                "application": path + '/'
+                "application": path === '/' ? '' : path + '/'
             }
         };
     </script>
