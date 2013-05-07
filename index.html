@@ -75,13 +75,18 @@
                 gadget: "TitleGadget",
                 data: {applicationTitle: "Smithy Tutorial"}
             });
-            application.addGadget("TestGadget", {
-                gadget: "WidgetTestGadget"
+            application.addGadget("NavigationGadget", {
+                gadget: "NavigationGadget"
+            });
+
+            application.addGadget("TwitterGadget", {
+                gadget: "TwitterGadget"
             });
 
             // load gadgets in the first window
             application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
-            application.loadGadgetTo("TestGadget", "windows[0]/center", true);
+            application.loadGadgetTo("NavigationGadget", "windows[0]/left", true, {style : "width: 25%"});
+            application.loadGadgetTo("TwitterGadget", "windows[0]/center", true, {style : "width: 75%"});
 
             // render app
             application.render();

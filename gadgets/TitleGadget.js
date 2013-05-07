@@ -24,7 +24,7 @@ define([
 
         setupView: function () {
             this.inherited(arguments);
-            this.set("content", "<b>" + this.ApplicationTitle + "</b>");
+            this.set("content", "<h1>" + this.ApplicationTitle + "</h1>");
         }
     });
 });
