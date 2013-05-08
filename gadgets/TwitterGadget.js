@@ -98,9 +98,10 @@ define([
                     console.log(results.length);
                     for (i = 0; i < results.length; i++) {
                         var currResult = data.results[i],
-                            imgUrl = currResult.profile_image_url;
+                            imgUrl = currResult.profile_image_url,
+                            fromUser = currResult.from_user;
                         resultContent += "<p>";
-                        resultContent += imgUrl ? "<img src='" + imgUrl + "' title='twitter profile picture' style='padding: 0em 1em'/>" : '';
+                        resultContent += imgUrl ? "<a href='https://twitter.com/" + fromUser + "' title='link to " + fromUser + " profile' target='_blank'><img src='" + imgUrl + "' title='twitter profile picture' style='padding: 0em 1em'/></a>" : '';
                         resultContent += _this.highlightSearchTerm(_this.replaceURLWithHTMLLinks(currResult.text), searchTerm);
                         resultContent += "</p>";
 
@@ -124,7 +125,7 @@ define([
          */
         replaceURLWithHTMLLinks: function (text) {
             var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-            return text.replace(exp,"<a href='$1'>$1</a>");
+            return text.replace(exp,"<a href='$1' target='_blank'>$1</a>");
         },
 
         /**
