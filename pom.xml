@@ -58,7 +58,6 @@ Smithy tutorial maven build.
                         </goals>
                         <configuration>
                             <dbConnectionSettings>
-                                <!-- loclhost
                                 <serverId>sspamsmock</serverId>
                                 <hostname>localhost</hostname>
                                 <port>10053</port>
