@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Smithy tutorial maven build.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.atsid</groupId>
+	<artifactId>smithy-tutorial</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+
+	<!-- PROJECT PROPERTIES -->
+	<properties>
+		<js.output.path>${project.build.directory}/${project.build.finalName}/js</js.output.path>
+		<javascript.source>${basedir}</javascript.source>
+	</properties>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jstd-maven-plugin google code repo</id>
+			<url>http://jstd-maven-plugin.googlecode.com/svn/maven2</url>
+		</pluginRepository>
+        <pluginRepository>
+            <id>maven-mongodb-plugin-repo</id>
+            <name>maven mongodb plugin repository</name>
+            <url>http://maven-mongodb-plugin.googlecode.com/svn/maven/repo</url>
+            <layout>default</layout>
+        </pluginRepository>
+	</pluginRepositories>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<classesDirectory>${javascript.source}</classesDirectory>
+				</configuration>
+			</plugin>
+
+<!--
+            <plugin>
+                <groupId>com.googlecode</groupId>
+                <artifactId>maven-mongodb-plugin</artifactId>
+                <version>0.3</version>
+                <executions>
+                    <execution>
+                        <id>create-mock-data</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                        <configuration>
+                            <dbConnectionSettings>
+                                <!-- loclhost
+                                <serverId>sspamsmock</serverId>
+                                <hostname>localhost</hostname>
+                                <port>10053</port>
+                                <database>sspamsdb</database>
+                                <serverId>sspamsmock</serverId>
+                                <hostname>linus.mongohq.com</hostname>
+                                <port>10053</port>
+                                <database>h04Jz1PnwEt3PulADxS1w</database>
+
+                            </dbConnectionSettings>
+                            <dbCreateScriptsDirectory><param>${basedir}/mongo/create</param></dbCreateScriptsDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>app/PTO</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+-->
+
+    </plugins>
+	</build>
+
+</project>
