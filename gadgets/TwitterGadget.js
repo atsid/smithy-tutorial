@@ -2,27 +2,28 @@ define([
     "smithy/declare",
     "smithy/Gadget",
     "dijit/form/Button",
+    "dijit/form/TextBox",
     "dijit/layout/ContentPane",
     "dojo/dom-construct",
     "dojo/dom",
     "dojo/json",
-//    "dojo/request/script",
     "dojo/io/script",
     "dojo/_base/lang"
 ], function (
     declare,
     Gadget,
     Button,
+    TextBox,
     ContentPane,
     domConst,
     dom,
     JSON,
-//    script,
     ioScript,
     lang
 ) {
 
 /**
+ * A simple twitter feed gadget to demo a dojo gadget.
  * @class TwitterGadget
  * A simple TwitterGadget gadget
  */
@@ -31,15 +32,24 @@ define([
 
         constructor: function (config) {
             this.ApplicationTitle = (config && config.initData && config.initData.applicationTitle) ||
-                "Twitter Feed for 'JavaScript'";
+                "Twitter Feed";
         },
 
         name: "TwitterGadget",
 
+        /**
+         * Set up form
+         */
         setupView: function () {
-            var refreshBtn, placeHolder, containerNode;
+            var refreshBtn, searchBox, containerNode;
             this.inherited(arguments);
             this.set("content", "<h1>" + this.ApplicationTitle + "</h1>");
+
+            searchBox = this.searchBox = new TextBox({
+                label: "Search Term",
+                placeHolder: "JavaScript",
+                style: "padding: 0em 1em;"
+            }).placeAt(this.domNode);
 
             refreshBtn = this.refreshBtn = new Button({
                 label: "Refresh Feed",
@@ -47,33 +57,30 @@ define([
             });
             refreshBtn.placeAt(this.domNode);
 
-
             containerNode = this.containerNode = dojo.create("div", null, this.domNode);
-            placeHolder = this.placeHolder = dojo.create("p", {innerHTML: "Requesting Tweets...", style: "display: none"}, containerNode);
+            this.placeHolder = dojo.create("p", {innerHTML: "Requesting Tweets...", style: "display: none"}, containerNode);
 
 
         },
 
+        /**
+         * Utility method for showing/hiding loading text.
+         * @param {boolean} show true if loading text should be displayed
+         */
         showPlaceHolder: function (show) {
             this.placeHolder.style.display = show ? "block" : "none";
 
         },
-//
-//        For some reason this form does NOT work until api 1.9 (not available in cdn)  Using above depricated method.
-//        getFeed: function() {
-//            script.get("http://search.twitter.com/search.json?q=JavaScript&rpp=5", {
-//                jsonp: "callback"
-//            }).then(function(data){
-//                    alert("data came back!");
-//                domConst.place("<p>response data: <code>" + JSON.stringify(data) + "</code></p>", this.domNode);
-//            });
-//        },
 
 
-
+        /**
+         * Get's twitter feed using JSONP and loads the result on to the page.
+         */
         getFeed: function () {
-            var _this = this, targetNode = this.containerNode, jsonpArgs;
+            var _this = this, targetNode = _this.containerNode, jsonpArgs, searchBox = _this.searchBox,
+                searchTerm = searchBox.value || "JavaScript";
             targetNode.innerHTML = ''; //clear old results
+
             _this.showPlaceHolder(true);
 
             // The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
@@ -82,16 +89,23 @@ define([
                 callbackParamName: "callback",
                 content: {
                     rpp: 10,
-                    q: "JavaScript"
+                    q: searchTerm
                 },
                 load: function(data) {
                     // Set the data from the search into the viewbox in nicely formatted JSON
-                    var results = data.results, i;
+                    var results = data.results, i, resultContent = "";
 
                     console.log(results.length);
                     for (i = 0; i < results.length; i++) {
-                        domConst.place("<p>" + data.results[i].text + "</p>", targetNode);
+                        var currResult = data.results[i],
+                            imgUrl = currResult.profile_image_url;
+                        resultContent += "<p>";
+                        resultContent += imgUrl ? "<img src='" + imgUrl + "' title='twitter profile picture' style='padding: 0em 1em'/>" : '';
+                        resultContent += _this.highlightSearchTerm(_this.replaceURLWithHTMLLinks(currResult.text), searchTerm);
+                        resultContent += "</p>";
+
                     }
+                    domConst.place(resultContent, targetNode);
                     _this.showPlaceHolder(false);
                 },
                 error: function(error) {
@@ -101,7 +115,29 @@ define([
                 }
             };
             ioScript.get(jsonpArgs);
+        },
+
+        /**
+         * Replaces link text with HTML link
+         * @param {string} text to be searched
+         * @returns {string} text with links marked up
+         */
+        replaceURLWithHTMLLinks: function (text) {
+            var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            return text.replace(exp,"<a href='$1'>$1</a>");
+        },
+
+        /**
+         * Highlights instances of search term in text
+         * @param {string} text to be searched and marked up.
+         * @param {string} term to be highlighted
+         * @returns {string} marked up text.
+         */
+        highlightSearchTerm: function (text, term) {
+            return text.replace(term,"<span style='background-color: lightgoldenrodyellow'>" + term + "</span>");
         }
+
+
 
     });
 });
