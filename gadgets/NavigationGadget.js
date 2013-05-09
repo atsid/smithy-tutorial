@@ -67,28 +67,29 @@ define([
             var menu = new DropDownMenu({ style: "display: none;"});
             var menuItem1 = new MenuItem({
                 label: "Open Right",
-                iconClass:"dijitEditorIcon dijitEditorIconSave",
+                iconClass:"dijitIconFolderOpen",
                 onClick: function(){
-                    alert('save');
+                    console.log("Open in right column");
                 }
             });
             menu.addChild(menuItem1);
 
             var menuItem2 = new MenuItem({
                 label: "Open Bottom",
-                iconClass:"dijitEditorIcon dijitEditorIconCut",
-                onClick: function(){ alert('cut'); }
+                iconClass:"dijitIconFolderOpen",
+                onClick: function(){
+                    console.log("Open in bottom"); }
             });
             menu.addChild(menuItem2);
 
             (new DropDownButton({
-                label: "button",
+                label: "",
                 name: "twitterGadgetOpener",
                 dropDown: menu,
                 id: "twitBtn",
-                onClick: function () {
-                    console.log("Open in default location");
-                },
+//                onClick: function () {
+//                    console.log("Open in default location");
+//                },
                 onFocus: function () {
                     this.openDropDown();
                 },
@@ -97,9 +98,9 @@ define([
                 }
             })).placeAt(targetNode);
 
-            (new TextBox({
-                label: "text box"
-            })).placeAt(targetNode);
+//            (new TextBox({
+//                label: "text box"
+//            })).placeAt(targetNode);
         }
     });
 });

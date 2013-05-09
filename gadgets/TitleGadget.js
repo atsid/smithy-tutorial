@@ -18,6 +18,8 @@ define([
         constructor: function (config) {
             this.ApplicationTitle = (config && config.initData && config.initData.applicationTitle) ||
                 "A Smithy-js Test Application";
+
+            this.style = "height: 100px";
         },
 
         name: "TitleGadget",

@@ -4,7 +4,45 @@ html, body {
     margin: 0;
     overflow:hidden;
 }
+h1 {
+    text-align: center;
+}
 #borderContainer {
     width: 100%;
     height: 100%;
+}
+
+.gadget {
+    padding: 2em;
+}
+
+.smithyTweet {
+    border-top: 1px lightgrey solid;
+    padding: .5em;
+    margin: 0px 0px -1px 0px;
+    min-height: 50px;
+    vertical-align: middle;
+}
+
+.searchText {
+    background-color: lightgoldenrodyellow;
+}
+.tweetSearch {
+    padding: 1em;
+}
+
+.tweetFeedContainer {
+    border: 2px lightgrey solid;
+    border-radius: 20px;
+    background-color: #daedfe;
+    min-height: 400px;
+}
+.tweetFeed {
+    /*border-top: 1px lightgrey solid;*/
+}
+
+.tweetImg {
+    border: none;
+    padding: 0px .5em;
+    float: left;
 }

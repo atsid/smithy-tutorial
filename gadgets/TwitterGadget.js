@@ -41,23 +41,28 @@ define([
          * Set up form
          */
         setupView: function () {
-            var refreshBtn, searchBox, containerNode;
+            var refreshBtn, searchBox, containerNode, tweetSearchNode;
             this.inherited(arguments);
-            this.set("content", "<h1>" + this.ApplicationTitle + "</h1>");
+            this.set("content", "<h2>" + this.ApplicationTitle + "</h2>");
+
+
+            containerNode = this.containerNode = dojo.create("div", {class: "tweetFeedContainer"}, this.domNode);
+
+            tweetSearchNode = this.tweetSearchNode = dojo.create("div", {class: "tweetSearch"}, containerNode);
 
             searchBox = this.searchBox = new TextBox({
                 label: "Search Term",
                 placeHolder: "JavaScript",
                 style: "padding: 0em 1em;"
-            }).placeAt(this.domNode);
+            }).placeAt(tweetSearchNode);
 
             refreshBtn = this.refreshBtn = new Button({
                 label: "Refresh Feed",
                 onClick: lang.hitch(this, this.getFeed)
             });
-            refreshBtn.placeAt(this.domNode);
+            refreshBtn.placeAt(tweetSearchNode);
 
-            containerNode = this.containerNode = dojo.create("div", null, this.domNode);
+            this.tweetContainerNode = dojo.create("div", {class: "tweetFeed"}, containerNode);
             this.placeHolder = dojo.create("p", {innerHTML: "Requesting Tweets...", style: "display: none"}, containerNode);
 
 
@@ -77,7 +82,7 @@ define([
          * Get's twitter feed using JSONP and loads the result on to the page.
          */
         getFeed: function () {
-            var _this = this, targetNode = _this.containerNode, jsonpArgs, searchBox = _this.searchBox,
+            var _this = this, targetNode = _this.tweetContainerNode, jsonpArgs, searchBox = _this.searchBox,
                 searchTerm = searchBox.value || "JavaScript";
             targetNode.innerHTML = ''; //clear old results
 
@@ -100,10 +105,10 @@ define([
                         var currResult = data.results[i],
                             imgUrl = currResult.profile_image_url,
                             fromUser = currResult.from_user;
-                        resultContent += "<p>";
-                        resultContent += imgUrl ? "<a href='https://twitter.com/" + fromUser + "' title='link to " + fromUser + " profile' target='_blank'><img src='" + imgUrl + "' title='twitter profile picture' style='padding: 0em 1em'/></a>" : '';
+                        resultContent += "<div class='smithyTweet'>";
+                        resultContent += imgUrl ? "<a href='https://twitter.com/" + fromUser + "' title='link to " + fromUser + " profile' target='_blank'><img src='" + imgUrl + "' title='twitter profile picture' class='tweetImg'/></a>" : '';
                         resultContent += _this.highlightSearchTerm(_this.replaceURLWithHTMLLinks(currResult.text), searchTerm);
-                        resultContent += "</p>";
+                        resultContent += "</div>";
 
                     }
                     domConst.place(resultContent, targetNode);
@@ -135,7 +140,7 @@ define([
          * @returns {string} marked up text.
          */
         highlightSearchTerm: function (text, term) {
-            return text.replace(term,"<span style='background-color: lightgoldenrodyellow'>" + term + "</span>");
+            return text.replace(term,"<span class='searchText'>" + term + "</span>");
         }
 
 
