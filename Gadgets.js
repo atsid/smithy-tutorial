@@ -1,6 +1,6 @@
 define([
     "application/gadgets/TitleGadget",
-    "application/gadgets/WidgetTestGadget",
+    "application/gadgets/NavigationGadget",
     "application/gadgets/TwitterGadget"
 ], function (
 ) {
