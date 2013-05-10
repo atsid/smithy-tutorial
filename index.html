@@ -87,10 +87,9 @@
             application.addGadget("ToolBarGadget", {});
 
             // load gadgets in the first window
-            application.loadGadgetTo("TwitterGadget", "windows[0]/center", true, {class: "gadget",style : "width: 85%"});
-//            application.loadGadgetTo("ToolBarGadget", "windows[0]/top", true);
-            application.loadGadgetTo("TitleGadget", "windows[0]/center/top", true);
-            application.loadGadgetTo("NavigationGadget", "windows[0]/top", true);
+            application.loadGadgetTo("TwitterGadget", "windows[0]/center/center", true, {class: "gadget",style : "width: 85%"});
+            application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
+            application.loadGadgetTo("NavigationGadget", "windows[0]/center/top", true);
 
             // render app
             application.render();

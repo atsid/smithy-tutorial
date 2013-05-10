@@ -46,61 +46,66 @@ define([
 
         setupView: function () {
             this.inherited(arguments);
-            var bc = new BorderContainer({gutters: false, style: "height: 100%; width: 100%"}),
-                toolbar,
-                center;
-            bc.placeAt(this.domNode);
+//            this.set("content", "<h1>" + this.title + "</h1>");
 
-
-            center = new ContentPane({region: "center"});
-            bc.addChild(center);
-
-            this.addControls(center.domNode);
-
-            bc.startup();
-        },
-
-        addControls: function (targetNode) {
-
-            domConstruct.create("h2", {innerHTML: this.title}, targetNode);
-
-            var menu = new DropDownMenu({ style: "display: none;"});
-            var menuItem1 = new MenuItem({
-                label: "Open Right",
-                iconClass:"dijitIconFolderOpen",
-                onClick: function(){
-                    console.log("Open in right column");
-                }
-            });
-            menu.addChild(menuItem1);
-
-            var menuItem2 = new MenuItem({
-                label: "Open Bottom",
-                iconClass:"dijitIconFolderOpen",
-                onClick: function(){
-                    console.log("Open in bottom"); }
-            });
-            menu.addChild(menuItem2);
-
-            (new DropDownButton({
-                label: "",
-                name: "twitterGadgetOpener",
-                dropDown: menu,
-                id: "twitBtn",
-//                onClick: function () {
-//                    console.log("Open in default location");
-//                },
-                onFocus: function () {
-                    this.openDropDown();
-                },
-                onMouseEnter: function () {
-                    this.openDropDown();
-                }
-            })).placeAt(targetNode);
-
-//            (new TextBox({
-//                label: "text box"
-//            })).placeAt(targetNode);
         }
+//        setupView: function () {
+//            this.inherited(arguments);
+//            var bc = new BorderContainer({gutters: false, style: "height: 100%; width: 100%"}),
+//                toolbar,
+//                center;
+//            bc.placeAt(this.domNode);
+//
+//
+//            center = new ContentPane({region: "center"});
+//            bc.addChild(center);
+//
+//            this.addControls(center.domNode);
+//
+//            bc.startup();
+//        },
+//
+//        addControls: function (targetNode) {
+//
+//            domConstruct.create("h2", {innerHTML: this.title}, targetNode);
+//
+//            var menu = new DropDownMenu({ style: "display: none;"});
+//            var menuItem1 = new MenuItem({
+//                label: "Open Right",
+//                iconClass:"dijitIconFolderOpen",
+//                onClick: function(){
+//                    console.log("Open in right column");
+//                }
+//            });
+//            menu.addChild(menuItem1);
+//
+//            var menuItem2 = new MenuItem({
+//                label: "Open Bottom",
+//                iconClass:"dijitIconFolderOpen",
+//                onClick: function(){
+//                    console.log("Open in bottom"); }
+//            });
+//            menu.addChild(menuItem2);
+//
+//            (new DropDownButton({
+//                label: "",
+//                name: "twitterGadgetOpener",
+//                dropDown: menu,
+//                id: "twitBtn",
+////                onClick: function () {
+////                    console.log("Open in default location");
+////                },
+//                onFocus: function () {
+//                    this.openDropDown();
+//                },
+//                onMouseEnter: function () {
+//                    this.openDropDown();
+//                }
+//            })).placeAt(targetNode);
+//
+////            (new TextBox({
+////                label: "text box"
+////            })).placeAt(targetNode);
+//        }
     });
 });

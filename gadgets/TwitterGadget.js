@@ -46,23 +46,23 @@ define([
             this.set("content", "<h2>" + this.ApplicationTitle + "</h2>");
 
 
-            containerNode = this.containerNode = dojo.create("div", {class: "tweetFeedContainer"}, this.domNode);
+            containerNode = domConst.create("div", {"class": "tweetFeedContainer"}, this.domNode);
 
-            tweetSearchNode = this.tweetSearchNode = dojo.create("div", {class: "tweetSearch"}, containerNode);
+            tweetSearchNode = domConst.create("div", {"class": "tweetSearch"}, containerNode);
 
-            searchBox = this.searchBox = new TextBox({
+            this.searchBox = new TextBox({
                 label: "Search Term",
                 placeHolder: "JavaScript",
                 style: "padding: 0em 1em;"
             }).placeAt(tweetSearchNode);
 
-            refreshBtn = this.refreshBtn = new Button({
+            refreshBtn = new Button({
                 label: "Refresh Feed",
                 onClick: lang.hitch(this, this.getFeed)
             });
             refreshBtn.placeAt(tweetSearchNode);
 
-            this.tweetContainerNode = dojo.create("div", {class: "tweetFeed"}, containerNode);
+            this.tweetContainerNode = domConst.create("div", {"class": "tweetFeed"}, containerNode);
             this.placeHolder = dojo.create("p", {innerHTML: "Requesting Tweets...", style: "display: none"}, containerNode);
 
 
@@ -82,31 +82,31 @@ define([
          * Get's twitter feed using JSONP and loads the result on to the page.
          */
         getFeed: function () {
-            var _this = this, targetNode = _this.tweetContainerNode, jsonpArgs, searchBox = _this.searchBox,
+            var _this = this, targetNode = _this.tweetContainerNode, params, searchBox = _this.searchBox,
                 searchTerm = searchBox.value || "JavaScript";
             targetNode.innerHTML = ''; //clear old results
 
             _this.showPlaceHolder(true);
 
             // The parameters to pass to xhrGet, the url, how to handle it, and the callbacks.
-            jsonpArgs = {
+            params = {
                 url: "http://search.twitter.com/search.json",
                 callbackParamName: "callback",
                 content: {
-                    rpp: 10,
                     q: searchTerm
                 },
-                load: function(data) {
+                load: function (data) {
                     // Set the data from the search into the viewbox in nicely formatted JSON
-                    var results = data.results, i, resultContent = "";
+                    var results = data.results, i, resultContent = "", currResult, imgUrl, fromUser;
 
-                    console.log(results.length);
-                    for (i = 0; i < results.length; i++) {
-                        var currResult = data.results[i],
-                            imgUrl = currResult.profile_image_url,
-                            fromUser = currResult.from_user;
+                    for (i = 0; i < results.length; i += 1) {
+                        currResult = data.results[i];
+                        imgUrl = currResult.profile_image_url;
+                        fromUser = currResult.from_user;
                         resultContent += "<div class='smithyTweet'>";
-                        resultContent += imgUrl ? "<a href='https://twitter.com/" + fromUser + "' title='link to " + fromUser + " profile' target='_blank'><img src='" + imgUrl + "' title='twitter profile picture' class='tweetImg'/></a>" : '';
+                        resultContent += imgUrl ? "<a href='https://twitter.com/" + fromUser + "' title='link to " +
+                            fromUser + " profile' target='_blank'><img src='" +
+                            imgUrl + "' title='twitter profile picture' class='tweetImg'/></a>" : '';
                         resultContent += _this.highlightSearchTerm(_this.replaceURLWithHTMLLinks(currResult.text), searchTerm);
                         resultContent += "</div>";
 
@@ -114,13 +114,13 @@ define([
                     domConst.place(resultContent, targetNode);
                     _this.showPlaceHolder(false);
                 },
-                error: function(error) {
+                error: function (error) {
                     domConst.place("<p>There was a problem accessing Twitter: " + error + "</p>", targetNode);
 
                     _this.showPlaceHolder(false);
                 }
             };
-            ioScript.get(jsonpArgs);
+            ioScript.get(params);
         },
 
         /**
@@ -130,7 +130,7 @@ define([
          */
         replaceURLWithHTMLLinks: function (text) {
             var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-            return text.replace(exp,"<a href='$1' target='_blank'>$1</a>");
+            return text.replace(exp, "<a href='$1' target='_blank'>$1</a>");
         },
 
         /**
@@ -140,7 +140,7 @@ define([
          * @returns {string} marked up text.
          */
         highlightSearchTerm: function (text, term) {
-            return text.replace(term,"<span class='searchText'>" + term + "</span>");
+            return text.replace(term, "<span class='searchText'>" + term + "</span>");
         }
 
 
