@@ -17,7 +17,14 @@
             }
         };
     </script>
-    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
+    <!--script src="lib/amd-plugins-1.0.4-min.js"></script>
+    <script src="lib/smithy-0.1.1-min.js"></script>
+    <script src="lib/bullhorn-1.0.0-min.js"></script>
+    <script src="lib/circuits-1.0.1-min.js"></script>
+    <script src="lib/schematic-1.0.1-min.js"></script-->
+
+
     <script src="//atsid.github.io/releases/amd-plugins-1.0.3-min.js"></script>
     <script src="//atsid.github.io/releases/smithy-0.1.1-min.js"></script>
     <script src="//atsid.github.io/releases/bullhorn-1.0.0-min.js"></script>
@@ -54,7 +61,7 @@
             // setup channel factory to find channels.
             cfact = new ChannelFactory({
                 resolver: new AmdResolver({
-                    path: "application/schema/",
+                    path: "application/schema/channels/",
                     synchronous: true
                 }).resolver
             });
@@ -84,12 +91,23 @@
                 gadget: "TwitterGadget"
             });
 
-            application.addGadget("ToolBarGadget", {});
+            application.addGadget("NewsGadget", {
+                data: {applicationTitle: "News Feed"}
+            });
+
+//            application.addGadget("ToolBarGadget", {});
+
+            application.addGadget("StockGadget", {
+                data: {applicationTitle: "Stock Quote"}});
 
             // load gadgets in the first window
-            application.loadGadgetTo("TwitterGadget", "windows[0]/center/center", true, {class: "gadget",style : "width: 85%"});
             application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
+//            application.loadGadgetTo("ToolBarGadget", "windows[0]/center/center/tab[0]/top", true);
             application.loadGadgetTo("NavigationGadget", "windows[0]/center/top", true);
+            application.loadGadgetTo("TwitterGadget", "windows[0]/center/left", true, {class: "gadget", style : "width: 30%"});
+            application.loadGadgetTo("NewsGadget", "windows[0]/center/center/center", true, {class: "gadget",style : "width: 70%, height: 65%"});
+            application.loadGadgetTo("StockGadget", "windows[0]/center/center/top", true, {class: "gadget",style : "width: 70%, height: 35%"});
+
 
             // render app
             application.render();

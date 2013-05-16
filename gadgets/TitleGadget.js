@@ -24,6 +24,7 @@ define([
 
         name: "TitleGadget",
 
+        title: "Title",
         setupView: function () {
             this.inherited(arguments);
             this.set("content", "<h1>" + this.ApplicationTitle + "</h1>");

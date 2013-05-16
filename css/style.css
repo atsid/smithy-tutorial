@@ -16,7 +16,7 @@ h1 {
     padding: 2em;
 }
 
-.smithyTweet {
+.smithyGadget {
     border-top: 1px lightgrey solid;
     padding: .5em;
     margin: 0px 0px -1px 0px;
@@ -27,22 +27,37 @@ h1 {
 .searchText {
     background-color: lightgoldenrodyellow;
 }
-.tweetSearch {
+.gadgetSearch {
     padding: 1em;
 }
 
-.tweetFeedContainer {
+.gadgetFeedContainer {
     border: 2px lightgrey solid;
     border-radius: 20px;
     background-color: #daedfe;
-    min-height: 400px;
+    min-height: 250px;
+    min-width: 500px;
+    width: 50%;
 }
-.tweetFeed {
+.gadgetFeed {
     /*border-top: 1px lightgrey solid;*/
 }
 
-.tweetImg {
+.gadgetImg {
     border: none;
     padding: 0px .5em;
     float: left;
+}
+
+.stockLeftDiv {
+    float: left;
+    width: 50%;
+}
+
+.stockRightDiv {
+    width: 50%;
+}
+.stockName {
+    font-size: 1.5em;
+    font-weight: 200;
 }

@@ -1,6 +1,6 @@
 define([
     "smithy/declare",
-    "smithy/Gadget",
+    "smithy/ToolGadget",
     "dojo/dom-construct",
     "dijit/layout/BorderContainer",
     "dijit/layout/ContentPane",
@@ -15,7 +15,7 @@ define([
     "dijit/form/TextBox"
 ], function (
     declare,
-    Gadget,
+    ToolGadget,
     domConstruct,
     BorderContainer,
     ContentPane,
@@ -35,9 +35,11 @@ define([
  * Displays links for available gadgets.
  */
 
-    return declare([ContentPane, Gadget], {
+    return declare([ContentPane, ToolGadget], {
 
         name: "NavigationGadget",
+
+        tabsOpen: 1,
 
         constructor: function (data) {
             this.title = 'Available Gadgets';
@@ -46,66 +48,38 @@ define([
 
         setupView: function () {
             this.inherited(arguments);
+//            this.addButtons();
 //            this.set("content", "<h1>" + this.title + "</h1>");
 
+        },
+
+        addButtons: function () {
+            var toolbarNode = this.domNode, navGadget = this;
+            this.gadgetSpace.enumerateGadgetDescriptors(function (descriptor) {
+                new Button({
+                    label: descriptor.name,
+                    iconClass: "gadgetToggleIcon",
+                    onClick: function (data) {
+                        navGadget.loadGadget.apply(navGadget, [descriptor.name]);
+                    }
+                }).placeAt(toolbarNode);
+//                this.registeredGadgets.addOption({label: descriptor.name, value: descriptor});
+            }, this);
+
+        },
+
+        loadGadget: function (data) {
+            var area = this.gadgetSpace.loadGadgetTo(
+                data,
+                this.tabsOpen === 0 ? "windows[0]/center/center" : "windows[0]/center/center/col[" + this.tabsOpen + "]",
+                true
+            );
+            area.render();
+            this.tabsOpen += 1;
+        },
+
+        removeGadget: function (data) {
+            var area = this.gadgetSpace.removeArea(data);
         }
-//        setupView: function () {
-//            this.inherited(arguments);
-//            var bc = new BorderContainer({gutters: false, style: "height: 100%; width: 100%"}),
-//                toolbar,
-//                center;
-//            bc.placeAt(this.domNode);
-//
-//
-//            center = new ContentPane({region: "center"});
-//            bc.addChild(center);
-//
-//            this.addControls(center.domNode);
-//
-//            bc.startup();
-//        },
-//
-//        addControls: function (targetNode) {
-//
-//            domConstruct.create("h2", {innerHTML: this.title}, targetNode);
-//
-//            var menu = new DropDownMenu({ style: "display: none;"});
-//            var menuItem1 = new MenuItem({
-//                label: "Open Right",
-//                iconClass:"dijitIconFolderOpen",
-//                onClick: function(){
-//                    console.log("Open in right column");
-//                }
-//            });
-//            menu.addChild(menuItem1);
-//
-//            var menuItem2 = new MenuItem({
-//                label: "Open Bottom",
-//                iconClass:"dijitIconFolderOpen",
-//                onClick: function(){
-//                    console.log("Open in bottom"); }
-//            });
-//            menu.addChild(menuItem2);
-//
-//            (new DropDownButton({
-//                label: "",
-//                name: "twitterGadgetOpener",
-//                dropDown: menu,
-//                id: "twitBtn",
-////                onClick: function () {
-////                    console.log("Open in default location");
-////                },
-//                onFocus: function () {
-//                    this.openDropDown();
-//                },
-//                onMouseEnter: function () {
-//                    this.openDropDown();
-//                }
-//            })).placeAt(targetNode);
-//
-////            (new TextBox({
-////                label: "text box"
-////            })).placeAt(targetNode);
-//        }
     });
 });
