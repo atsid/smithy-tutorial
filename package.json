@@ -6,6 +6,11 @@
     "start": "node main.js"
   },
   "dependencies": {
-    "express": "3.2.3"
+    "express": "3.2.3",
+    "mongoose": ">=3.6.0",
+    "circuits-js": ">0.0.0",
+    "requirejs": ">=2.1.6",
+    "mongoose-gen": ">0.0.0",
+    "fs-extra": ">0.6.0"
   }
 }
