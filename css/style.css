@@ -31,6 +31,10 @@ h1 {
     padding: 1em;
 }
 
+.gadgetFeedHeader {
+    
+}
+
 .gadgetFeedContainer {
     border: 2px lightgrey solid;
     border-radius: 20px;

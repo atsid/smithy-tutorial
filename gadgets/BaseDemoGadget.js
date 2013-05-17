@@ -55,7 +55,7 @@ define([
             var refreshBtn, searchBox, containerNode, gadgetSearchNode, searchLabel = this.searchLabel,
                 placeHolderText = this.searchPlaceHolder;
             this.inherited(arguments);
-            this.set("content", "<h2>" + this.ApplicationTitle + "</h2>");
+            this.set("content", "<h2 class='gadgetFeedHeader'>" + this.ApplicationTitle + "</h2>");
 
 
             containerNode = domConst.create("div", {"class": "gadgetFeedContainer"}, this.domNode);
