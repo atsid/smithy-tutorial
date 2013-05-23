@@ -58,7 +58,7 @@ define([
             this.set("content", "<h2 class='gadgetFeedHeader'>" + this.ApplicationTitle + "</h2>");
 
 
-            containerNode = domConst.create("div", {"class": "gadgetFeedContainer"}, this.domNode);
+            containerNode = domConst.create("div", {"class": "well gadgetFeedContainer"}, this.domNode);
 
             gadgetSearchNode = domConst.create("div", {"class": "gadgetSearch"}, containerNode);
 

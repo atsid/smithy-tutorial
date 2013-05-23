@@ -36,15 +36,14 @@ h1 {
 }
 
 .gadgetFeedContainer {
-    border: 2px lightgrey solid;
-    border-radius: 20px;
-    background-color: #daedfe;
-    min-height: 250px;
+    min-height: 250px !important;
     min-width: 500px;
     width: 50%;
 }
 .gadgetFeed {
     /*border-top: 1px lightgrey solid;*/
+    display: inline-block;
+    width: 100%;
 }
 
 .gadgetImg {
