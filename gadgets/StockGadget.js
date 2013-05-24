@@ -38,7 +38,6 @@ define([
                 content: {
                     q: "select * from yahoo.finance.quotes where symbol = '" + searchTerm + "'",
                     format: "json",
-                    diagnostics: true,
                     env: "store://datatables.org/alltableswithkeys"
                 },
                 load: function (data) {

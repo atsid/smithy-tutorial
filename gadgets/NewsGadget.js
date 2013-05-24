@@ -34,7 +34,6 @@ define([
                 content: {
                     q: "select * from html where url=\"http://finance.yahoo.com/q?s=" + searchTerm + "\" and xpath='//div[@id=\"yfi_headlines\"]/div[2]/ul/li/a' limit 5",
                     format: "json",
-                    diagnostics: true,
                     env: "store://datatables.org/alltableswithkeys"
                 },
                 load: function (data) {
