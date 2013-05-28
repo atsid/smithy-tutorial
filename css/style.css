@@ -31,6 +31,10 @@ h1 {
     padding: 1em;
 }
 
+.gadgetFeedHeader {
+    
+}
+
 .gadgetFeedContainer {
     min-height: 250px !important;
     min-width: 500px;
