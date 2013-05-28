@@ -40,6 +40,11 @@ h1 {
     min-width: 500px;
     width: 50%;
 }
+.syllabusGadget {
+    background-color: #daedfe;
+    min-height: 30%;
+    min-width: 20%;
+}
 .gadgetFeed {
     /*border-top: 1px lightgrey solid;*/
     display: inline-block;

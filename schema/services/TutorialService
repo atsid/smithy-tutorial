@@ -1,0 +1,57 @@
+{
+    "id": "schema/services/TutorialService",
+    "schemaId": "schema/services/TutorialService",
+    "SMDVersion": "2.0",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "transport": "REST",
+    "envelope": "PATH",
+    "description": "Retrieve Information about .",
+    "contentType": "application/json",
+    "target": "",
+    "parameters": [
+        {
+            "name": "id",
+            "type": "string",
+            "envelope": "PATH",
+            "description": "The id of an object.",
+            "required": false
+        }
+    ],
+    "services": {
+        "getSyllabuses": {
+            "transport": "GET",
+            "target": "syllabus",
+            "description": "Gets a list of syllabuses.",
+            "returns": {
+                "type": "array",
+                "items": {
+                   "$ref": "/schema/models/Syllabus"
+                }
+            }
+        },
+        "getSyllabus": {
+            "transport": "GET",
+            "target": "populate/syllabus/{id}",
+            "description": "Gets a syllabus.",
+            "returns": {
+                "$ref": "/schema/models/Syllabus"
+            }
+        },
+        "getLesson": {
+            "transport": "GET",
+            "target": "populate/lessoncontent/{id}",
+            "description": "Gets a lesson belonging to a syllabus.",
+            "returns": {
+                "$ref": "/schema/models/LessonContent"
+            }
+        },
+        "getLessons": {
+            "transport": "GET",
+            "target": "lessoncontent",
+            "description": "Gets a lesson belonging to a syllabus.",
+            "returns": {
+                "$ref": "/schema/models/LessonContent"
+            }
+        }
+    }
+}

@@ -1,9 +1,17 @@
-define({
-	"id": "schema/models/Syllabus",
+{
+	"id": "/schema/models/Syllabus",
 	"description": "A syllabus for a turorial",
 	"$schema": "http://json-schema.org/draft-03/schema",
 	"type": "object",
 	"properties": {
+        "_id": {
+            "type": "string"
+        },
+        "isRoot": {
+			"type": "boolean",
+			"description": "Is this a top level syllabus?",
+			"required": true
+        },
 		"title": {
 			"type": "string",
 			"description": "The title of this syllabus or lesson",
@@ -14,7 +22,7 @@ define({
             "description": "Textual/link content for the lesson.",
             "required": false,
             "items": {
-                "$ref": "schema/models/LessonContent"
+                "$ref": "/schema/models/LessonContent"
             }
         },
 		"lessons": {
@@ -22,8 +30,8 @@ define({
 			"description": "Breakdown into sub-lessons if appropriate.",
 			"required": false,
 			"items": {
-				"$ref": "schema/models/Syllabus"
+				"$ref": "/schema/models/Syllabus"
 			}
 		}
 	}
-});
+}

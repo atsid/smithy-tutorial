@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Smithy Tutorial</title>
-    <link id="themeStyles" rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/claro/claro.css">
+    <link href="http://thesociable.github.io/dbootstrap/dbootstrap/theme/dbootstrap/dbootstrap.css" rel="stylesheet">
     <link id="applicationStyles" rel="stylesheet" href="css/style.css">
     <script>
         // dojo configuration
@@ -12,15 +12,19 @@
             async: true,
             paths: {
                 "smithy/Query": '../dojox/json/query',
+                "circuits": "/lib/circuits",
+                "smithy": "/lib/smithy",
+                "amd-plugins": "/lib/plugins",
+                "schema": "/schema",
                 "application": path === '/' || path === '' ? '' : path + '/'
             }
         };
     </script>
-    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js"></script>
-    <script src="//atsid.github.io/releases/amd-plugins-1.0.3-min.js"></script>
-    <script src="//atsid.github.io/releases/smithy-0.1.1-min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
+    <!--script src="//atsid.github.io/releases/amd-plugins-1.0.3-min.js"></script-->
+    <!--script src="//atsid.github.io/releases/smithy-0.1.1-min.js"></script-->
     <script src="//atsid.github.io/releases/bullhorn-1.0.0-min.js"></script>
-    <script src="//atsid.github.io/releases/circuits-1.0.1-min.js"></script>
+    <!--script src="//atsid.github.io/releases/circuits-1.0.1-min.js"></script-->
     <script src="//atsid.github.io/releases/schematic-1.0.1-min.js"></script>
     <script>
         require([
@@ -60,7 +64,7 @@
     </script>
 
 </head>
-<body class="claro">
+<body class="dbootstrap">
    <div id="proxyRoot"></div>
 </body>
 </html>

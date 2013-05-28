@@ -1,9 +1,12 @@
-define({
-	"id": "schema/models/LessonContent",
+{
+	"id": "/schema/models/LessonContent",
 	"description": "The set of textual content that comprises this lesson",
 	"$schema": "http://json-schema.org/draft-03/schema",
 	"type": "object",
 	"properties": {
+        "_id": {
+            "type": "string"
+        },
 		"content": {
 			"type": "string",
 			"description": "Textual Content",
@@ -22,4 +25,4 @@ define({
             "description": "Regular expression for end of source highlight."
         }
 	}
-});
+}

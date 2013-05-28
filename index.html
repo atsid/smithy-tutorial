@@ -13,11 +13,16 @@
             async: true,
             paths: {
                 "smithy/Query": '../dojox/json/query',
-                "application": path === '/' ? '' : path + '/'
+                "circuits": "/lib/circuits",
+                "smithy": "/lib/smithy",
+//                "amd-plugins": "/lib/plugins",
+                "schema": "/schema",
+                "application": path === '/' || path === '' ? '' : path + '/'
             }
         };
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
+
     <!--script src="lib/amd-plugins-1.0.4-min.js"></script>
     <script src="lib/smithy-0.1.1-min.js"></script>
     <script src="lib/bullhorn-1.0.0-min.js"></script>
@@ -25,10 +30,10 @@
     <script src="lib/schematic-1.0.1-min.js"></script-->
 
 
-    <script src="//atsid.github.io/releases/amd-plugins-1.0.3-min.js"></script>
-    <script src="//atsid.github.io/releases/smithy-0.1.1-min.js"></script>
+    <script src="//atsid.github.io/releases/amd-plugins-1.0.7-min.js"></script>
+    <!--script src="//atsid.github.io/releases/smithy-0.1.2-min.js"></script-->
     <script src="//atsid.github.io/releases/bullhorn-1.0.0-min.js"></script>
-    <script src="//atsid.github.io/releases/circuits-1.0.1-min.js"></script>
+    <!--script src="//atsid.github.io/releases/circuits-1.0.3-min.js"></script-->
     <script src="//atsid.github.io/releases/schematic-1.0.1-min.js"></script>
     <script>
         require([
@@ -37,16 +42,20 @@
             "smithy/GadgetSpace",
             "smithy/dojoviews/DojoViewFactory",
             "smithy/GadgetFactory",
-            "bullhorn/ChannelFactory"
+            "bullhorn/ChannelFactory",
+            "schematic/ModelFactory",
+            "circuits/ServiceFactory"
         ], function (
                 Gadgets,
                 AmdResolver,
                 GadgetSpace,
                 DojoViewFactory,
                 GadgetFactory,
-                ChannelFactory
+                ChannelFactory,
+                ModelFactory,
+                ServiceFactory
         ) {
-            var vfact, gfact, cfact, application;
+            var vfact, gfact, cfact, mfact, sfact, application;
 
             // setup factories for gadget space configuration
             gfact = new GadgetFactory({
@@ -66,12 +75,42 @@
                 }).resolver
             });
 
+            // setup model factory to find models.
+            mfact = new ModelFactory({
+                resolver: new AmdResolver({
+                    path: "application/schema/models/",
+                    synchronous: true
+                }).resolver
+            });
+
+            // setup service factory to find services and model
+            // references.
+            sfact = new ServiceFactory({
+                resolver: function (name) {
+                    var ret, modr = new AmdResolver({
+                        path: "schema/models/",
+                        synchronous: true
+                    }), svcr = new AmdResolver({
+                        path: "schema/services/",
+                        synchronous: true
+                    });
+                    if (name.indexOf("models") != -1) {
+                        ret = modr.resolver(name);
+                    } else {
+                        ret = svcr.resolver(name);
+                    }
+                    return ret;
+                }
+            });
+
             // instantiate gadget space
             application = new GadgetSpace({
                 async: false,
                 gadgetFactory: gfact,
                 viewFactory: vfact,
                 channelFactory: cfact,
+                modelFactory: mfact,
+                serviceFactory: sfact,
                 extendedWindowConfig: {
                     url: "ExtendedWindow.html"
                 },
@@ -95,19 +134,37 @@
                 data: {applicationTitle: "News Feed"}
             });
 
+            application.addGadget("SyllabusGadget", {
+                gadget: "SyllabusGadget"
+            });
+            application.addGadget("LessonGadget", {
+                gadget: "LessonGadget"
+            });
+
 //            application.addGadget("ToolBarGadget", {});
 
             application.addGadget("StockGadget", {
                 data: {applicationTitle: "Stock Quote"}});
 
             // load gadgets in the first window
-            application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
+//            application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
 //            application.loadGadgetTo("ToolBarGadget", "windows[0]/center/center/tab[0]/top", true);
-            application.loadGadgetTo("NavigationGadget", "windows[0]/center/top", true);
-            application.loadGadgetTo("TwitterGadget", "windows[0]/center/left", true, {class: "gadget", style : "width: 30%"});
-            application.loadGadgetTo("NewsGadget", "windows[0]/center/center/center", true, {class: "gadget",style : "width: 70%, height: 65%"});
-            application.loadGadgetTo("StockGadget", "windows[0]/center/center/top", true, {class: "gadget",style : "width: 70%, height: 35%"});
+//            application.loadGadgetTo("NavigationGadget", "windows[0]/center/top", true);
+//            application.loadGadgetTo("SyllabusGadget", "windows[0]/left", true, {class: "gadgetFeedContainer"});
+//            application.loadGadgetTo("TwitterGadget", "windows[0]/center/left", true, {class: "gadget", style : "width: 30%"});
+//            application.loadGadgetTo("NewsGadget", "windows[0]/center/center/center", true, {class: "gadget",style : "width: 70%, height: 65%"});
+//            application.loadGadgetTo("StockGadget", "windows[0]/center/center/top", true, {class: "gadget",style : "width: 70%, height: 10%"});
 
+
+            application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
+            application.loadGadgetTo("SyllabusGadget", "windows[0]/left", true, {class: "syllabusGadget"});
+            application.loadGadgetTo("LessonGadget", "windows[0]/center/top", true, {class: "syllabusGadget"});
+
+            // load in another window
+//            application.loadGadgetTo("TitleGadget", "windows[1]/top", true);
+//            application.loadGadgetTo("TwitterGadget", "windows[1]/center/left", true, {class: "gadget"});
+//            application.loadGadgetTo("NewsGadget", "windows[1]/center/center/top", true, {class: "gadget"});
+//            application.loadGadgetTo("StockGadget", "windows[1]/center/center/center", true, {class: "gadget"});
 
             // render app
             application.render();

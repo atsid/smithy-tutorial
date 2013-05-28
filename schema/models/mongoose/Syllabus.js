@@ -1,6 +1,7 @@
 var mongoose = require("mongoose"),
     Syllabus = new mongoose.Schema({
     "title": String,
+    "isRoot": Boolean,
     "lessons": [{type: mongoose.Schema.Types.ObjectId, ref: 'Syllabus'}],
     "content": [{type: mongoose.Schema.Types.ObjectId, ref: 'LessonContent'}]
 });

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 module.exports = function (modelName, pathName, autoRoute, app, middleWare) {
     var Model = mongoose.model(modelName),
-        index, create, destroy, update, show, _getQuery;
+        index, create, destroy, update, show, populate, _getQuery;
 
     _getQuery = function (req) {
         var query = req.query.query ? JSON.parse(req.query.query) : {},
@@ -30,9 +30,8 @@ module.exports = function (modelName, pathName, autoRoute, app, middleWare) {
             if (err) {
                 throw err;
             } else {
-                req.docs = docs;
                 if (autoRoute) {
-                    res.send(JSON.stringify(req.docs));
+                    res.json(docs);
                 } else {
                     next();
                 }
@@ -47,14 +46,44 @@ module.exports = function (modelName, pathName, autoRoute, app, middleWare) {
             if (err) {
                 throw err;
             } else {
-                req.docs = doc;
                 if (autoRoute) {
-                    res.send(JSON.stringify(req.docs));
+                    res.json(doc);
                 } else {
                     next();
                 }
             }
         })
+    }
+
+    populate = function (req, res, next) {
+        var paths = "";
+        Model.schema.eachPath(function (pathname, type) {
+            var stype = type.options.type,
+                stypes = mongoose.Schema.Types;
+            if (stype === stypes.ObjectId) {
+                paths = paths + pathname + " ";
+            } else if (Array.isArray(stype)) {
+                stype.some(function (val) {
+                    if (val.type === stypes.ObjectId) {
+                        paths = paths + pathname + " ";
+                        return true;
+                    }
+                });
+            }
+        });
+        Model.findOne({
+            _id: req.params.id
+        }).populate(paths).exec(function (err, doc) {
+            if (err) {
+                throw err;
+            } else {
+                if (autoRoute) {
+                    res.json(doc);
+                } else {
+                    next();
+                }
+            }
+        });
     }
 
     update = function (req, res, next) {
@@ -124,8 +153,9 @@ module.exports = function (modelName, pathName, autoRoute, app, middleWare) {
         });
     }
 
-    if (autoRoute && app && pathName) {
+    if (autoRoute && app && typeof pathName === "string") {
         app.get("/" + pathName, middleWare, index);
+        app.get("/populate/" + pathName + "/:id", middleWare, populate);
         app.get("/" + pathName + "/:id", middleWare, show);
         app.put("/" + pathName + "/:id", middleWare, update);
         app.delete("/" + pathName + "/:id", middleWare, destroy);
