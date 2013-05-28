@@ -34,6 +34,7 @@ define([
             this.ApplicationTitle = (config && config.initData && config.initData.applicationTitle) ||
                 "Demo Feed";
             this.style = config.initData.style;
+            this.splitter = true;
         },
 
         name: "DemoGadget",

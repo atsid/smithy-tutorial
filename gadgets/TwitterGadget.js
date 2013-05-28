@@ -24,6 +24,7 @@ define([
             this.ApplicationTitle = (config && config.initData && config.initData.applicationTitle) ||
                 "Twitter Feed";
             this.style = config.initData.style;
+            this.splitter = true;
         },
 
         name: "TwitterGadget",
