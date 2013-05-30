@@ -63,21 +63,27 @@ define([
 
             that.TutorialService.getSyllabuses({}, {
                 load: function (data) {
-                    myStore = new Observable(
-                        new Memory({
+                    var td;
+                    // transform data to include a id expected
+                    // by dijit/Tree.
+                    data.forEach(function (val) {
+                        val.id = val._id;
+                    });
+                    myStore = new Memory({
                             data: data,//[{id: 0, title: "root", isRoot: true}],
                             getChildren: function(object){
                                 return this.query(function (val) {
                                     return (object.lessons && object.lessons.indexOf(val._id) !== -1);
                                 });
                             }
-                        })
-                    );
+                        });
+
                     // Create the model
                     myModel = new ObjectStoreModel({
                         store: myStore,
                         labelAttr: "title",
                         query: {isRoot: true}
+//                        query: {id: "world"}
                     });
                     // Create the Tree.
                     tree = new Tree({
