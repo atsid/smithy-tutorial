@@ -1,35 +1,42 @@
 define([
     "smithy/declare",
     "./BaseDemoGadget",
-    "dijit/form/Button",
-    "dijit/form/TextBox",
+    "dojo/io/script",
     "dojo/dom-construct"
 ], function (
     declare,
     BaseDemoGadget,
-    Button,
-    TextBox,
+    ioScript,
     domConst
 ) {
 
     /**
-     * A simple twitter feed gadget to demo a dojo gadget.
-     * @class TwitterGadget
-     * A simple TwitterGadget gadget
+     * A simple news feed gadget.
+     * @class NewsGadget
      */
 
-    return declare("NewsGadget", [BaseDemoGadget], {
+    var NewsGadget = declare("NewsGadget", [BaseDemoGadget], {
 
         name: "NewsGadget",
         title: "News",
-        searchLabel: "Get News",
-        searchPlaceHolder: "Enter stock symbol. Defaults AMZN",
+        
+        setupView: function () {
+            this.inherited(arguments);
+            var gadgetContainer = domConst.create("div", {"class": "well gadgetFeedContainer"}, this.domNode);
+            this.container = domConst.create("div", {"class": "gadgetFeed"}, gadgetContainer);
+            this.placeHolder = domConst.create("p", {innerHTML: "Requesting data...", style: "display: none"}, gadgetContainer);
+        },
 
-
-        getParams: function (scope, searchTerm, targetNode) {
-            return {
+        updateSearch: function (message) {
+            var _this = this,
+                searchTerm = message.searchTerm,
+                container = this.container;
+            
+            domConst.empty(container);
+            this.showPlaceHolder(true);
+            
+            ioScript.get({
                 url: "https://query.yahooapis.com/v1/public/yql",
-                //"http://search.twitter.com/search.json",
                 callbackParamName: "callback",
                 content: {
                     q: "select * from html where url=\"http://finance.yahoo.com/q?s=" + searchTerm + "\" and xpath='//div[@id=\"yfi_headlines\"]/div[2]/ul/li/a' limit 5",
@@ -38,12 +45,17 @@ define([
                 },
                 load: function (data) {
                     // Set the data from the search into the viewbox in nicely formatted JSON
-                    var results = (data.query && data.query.results) ? data.query.results.a : [], i, resultContent = "<div />", currResult, srcUrl, content;
+                    var results = (data.query && data.query.results) ? data.query.results.a : [], 
+                        i = 0, 
+                        resultContent = '', 
+                        currResult, 
+                        srcUrl, 
+                        content;
 
-                    if (results.length === 0) {
+                    if (!results.length) {
                         resultContent += "<div class='smithyGadget'>No results found for " + searchTerm + "</div>";
                     } else {
-                        for (i = 0; i < results.length; i += 1) {
+                        for (i; i < results.length; i += 1) {
                             currResult = results[i];
                             srcUrl = currResult.href;
                             content = currResult.content;
@@ -54,15 +66,15 @@ define([
                             resultContent += "</div>";
                         }
                     }
-                    domConst.place(resultContent, targetNode);
-                    scope.showPlaceHolder(false);
+                    domConst.place(resultContent, container);
+                    _this.showPlaceHolder(false);
                 },
                 error: function (error) {
-                    domConst.place("<p>There was a problem accessing Yahoo: " + error + "</p>", targetNode);
-
-                    scope.showPlaceHolder(false);
+                    domConst.place("<p>There was a problem accessing Yahoo: " + error + "</p>", container);
+                    _this.showPlaceHolder(false);
                 }
-            };
+            });
         }
     });
+    return NewsGadget;
 });

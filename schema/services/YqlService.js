@@ -4,7 +4,7 @@ define({
     "$schema": "http://json-schema.org/draft-03/schema",
     "transport": "JSONP",
     "envelope": "URL",
-    "description": "Service to pull data yahoo's rest api.",
+    "description": "Service to pull data from Yahoo's REST API.",
     "contentType": "application/json",
     "jsonpCallbackParameter": "callback",
     "target": "https://query.yahooapis.com/v1/public/yql",

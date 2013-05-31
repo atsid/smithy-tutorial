@@ -32,13 +32,13 @@ h1 {
 }
 
 .gadgetFeedHeader {
-    
+
 }
 
 .gadgetFeedContainer {
     min-height: 250px !important;
-    min-width: 500px;
-    width: 50%;
+    min-width: 300px;
+    width: 33%;
 }
 .syllabusGadget {
     background-color: #daedfe;
@@ -68,4 +68,31 @@ h1 {
 .stockName {
     font-size: 1.5em;
     font-weight: 200;
+}
+
+.tweet {
+	margin-bottom: 10px;
+	padding: 5px;
+	border: 2px solid;
+	position:relative;
+	min-height: 48px;
+}
+.tweet .image {
+	float: left;
+	margin-right: 10px;
+}
+.tweet .date {
+	font-size: 12px;
+}
+.tweet img {
+	height: 48px;
+	width: 48px;
+	margin-left: 0;
+}
+.tweet p {
+	text-align: left;
+	margin-bottom: 0;
+}
+.tweet a {
+	padding: 5px;
 }

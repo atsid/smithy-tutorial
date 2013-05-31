@@ -1,38 +1,41 @@
 define([
     "smithy/declare",
     "./BaseDemoGadget",
-    "smithy/Gadget",
-    "dijit/form/Button",
-    "dijit/form/TextBox",
-    "dijit/layout/ContentPane",
+    "dojo/io/script",
     "dojo/dom-construct"
 ], function (
     declare,
     BaseDemoGadget,
-    Gadget,
-    Button,
-    TextBox,
-    ContentPane,
+    ioScript,
     domConst
 ) {
 
     /**
-     * A simple stock feed gadget to demo a dojo gadget.
+     * A simple stock feed gadget.
      * @class StockGadget
-     * A simple StockGadget gadget
      */
 
-    return declare("StockGadget", [BaseDemoGadget], {
+    var StockGadget = declare("StockGadget", [BaseDemoGadget], {
 
         name: "StockGadget",
         title: "Stock",
-        searchLabel: "Get Stock",
-        searchPlaceHolder: "Enter stock symbol. Defaults AMZN",
+        
+        setupView: function () {
+            this.inherited(arguments);
+            var gadgetContainer = domConst.create("div", {"class": "well gadgetFeedContainer"}, this.domNode);
+            this.container = domConst.create("div", {"class": "gadgetFeed"}, gadgetContainer);
+            this.placeHolder = domConst.create("p", {innerHTML: "Requesting data...", style: "display: none"}, gadgetContainer);
+        },
 
-
-
-        getParams: function (scope, searchTerm, targetNode) {
-            return {
+        updateSearch: function (message) {
+            var _this = this,
+                searchTerm = message.searchTerm,
+                container = this.container;
+           
+            domConst.empty(container);
+            this.showPlaceHolder(true);
+        
+            ioScript.get({
                 url: "https://query.yahooapis.com/v1/public/yql",
                 callbackParamName: "callback",
                 content: {
@@ -42,7 +45,8 @@ define([
                 },
                 load: function (data) {
                     // Set the data from the search into the viewbox in nicely formatted JSON
-                    var result = (data.query && data.query.results) ? data.query.results.quote : {}, i, resultContent = "<div />";
+                    var result = (data.query && data.query.results) ? data.query.results.quote : {},
+                        resultContent = '';
 
                     if (!result.Ask) {
                         resultContent += "<div class='smithyGadget'>No results found for " + searchTerm + "</div>";
@@ -64,15 +68,15 @@ define([
                         resultContent += "</div>";
                         resultContent += "</div>";
                     }
-                    domConst.place(resultContent, targetNode);
-                    scope.showPlaceHolder(false);
+                    domConst.place(resultContent, container);
+                    _this.showPlaceHolder(false);
                 },
                 error: function (error) {
-                    domConst.place("<p>There was a problem accessing Yahoo: " + error + "</p>", targetNode);
-
-                    scope.showPlaceHolder(false);
+                    domConst.place("<p>There was a problem accessing Yahoo: " + error + "</p>", container);
+                    _this.showPlaceHolder(false);
                 }
-            };
+            });
         }
     });
+    return StockGadget;
 });

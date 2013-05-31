@@ -1,5 +1,6 @@
 define([
     "application/gadgets/TitleGadget",
+    "application/gadgets/SearchGadget",
     "application/gadgets/NavigationGadget",
     "application/gadgets/TwitterGadget",
     "application/gadgets/NewsGadget",
