@@ -51,7 +51,7 @@ define([
                         load: function (data) {
                             that.pcontent = data.content;
                             that.pcurrent = -1;
-                            that.changeContent(true)
+                            that.changeContent(true);
                         }
                     });
                 }
@@ -61,17 +61,25 @@ define([
 
         changeContent: function (forward) {
             var that = this,
-                current = forward ? that.pcurrent + 1 : that.pcurrent - 1;
+                current = forward ? that.pcurrent + 1 : that.pcurrent - 1,
+                pcontent = current < that.pcontent.length ?
+                    that.pcontent[current] : {content: "<p>Select a lesson...</p>" };
 
-            that.previous.set("disabled", current === 0 ? true : false);
+                    that.previous.set("disabled", current === 0 ? true : false);
             that.next.set("disabled", current === (that.pcontent.length - 1) ? true : false);
-            that.contentPane.set("content",
-                current < that.pcontent.length ? that.pcontent[current].content : "<p>Select a lesson...</p>");
+            that.contentPane.set("content", pcontent.content);
+            that.config.area.resize();
+            if (pcontent.sourceFile) {
+                that.pub.HighlightSource({
+                    source: pcontent.sourceFile,
+                    begin: pcontent.highlightBegin,
+                    end: pcontent.highlightEnd
+                })
+            }
         },
 
         /**
          * Add another content pane and navigation buttons to the
-         * This gadget only contains a tree widget.
          */
         setupView: function () {
             this.inherited(arguments);

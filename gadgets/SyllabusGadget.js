@@ -92,6 +92,7 @@ define([
 
                     that.addChild(tree);
                     tree.startup();
+                    that.config.area.resize();
                     tree.on("click", function (item, node, evt) {
                         if (that.lastSelected && item !== that.lastSelected) {
                             that.pub.LessonSelect({selected: false, lesson:that.lastSelected._id});
