@@ -83,7 +83,6 @@ define([
                         store: myStore,
                         labelAttr: "title",
                         query: {isRoot: true}
-//                        query: {id: "world"}
                     });
                     // Create the Tree.
                     tree = new Tree({
