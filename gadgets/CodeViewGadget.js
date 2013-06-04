@@ -1,6 +1,6 @@
 /**
  * @class LessonGagdet
- * A gadget to display a series of paragraphs related to a lesson.
+ * A gadget to display code based on a HighlightSource message.
  */
 
 define([
@@ -47,15 +47,15 @@ define([
         },
 
         /**
-         * Add another content pane and navigation buttons to the
-         * This gadget only contains a tree widget.
+         * Setup the content pane that will display the source and a listener that
+         * will highlight the source when the it has been downloaded by content pane.
          */
         setupView: function () {
             this.inherited(arguments);
             var that = this;
             that.set("content", "<pre id='codesnippet' class='codeview javascript'>No code to display.</pre>");
             this.onDownloadEnd = function () {
-                var loadevt, txt = that.get("content"),
+                var txt = that.get("content"),
                     cheight = (that.domNode.offsetHeight - 50),
                     cwidth = (that.domNode.offsetWidth - 30),
                     style = "style='width:" + cwidth + "px; height:" + cheight + "px'";
@@ -66,8 +66,7 @@ define([
         },
 
         /**
-         * Add another content pane and navigation buttons to the
-         * This gadget only contains a tree widget.
+         * track resize so it can be passed on to codeview.
          */
         resize: function(evt) {
             this.inherited(arguments);
