@@ -1,28 +1,34 @@
 define([
     "smithy/declare",
     "./BaseDemoGadget",
-    "dojo/io/script",
+    "circuits/ServiceFactory",
+    "amd-plugins/jsonschema!application/schema/services/FriendFeedService",
     "dojo/dom-construct"
 ], function (
     declare,
     BaseDemoGadget,
-    ioScript,
+    ServiceFactory,
+    FriendFeedService,
     domConst
 ) {
 
     /**
-     * A simple twitter feed gadget..
-     * @class TwitterGadget
+     * A simple FriendFeed gadget..
+     * @class FriendFeedGadget
      */
 
-    var TwitterGadget = declare("TwitterGadget", [BaseDemoGadget], {
+    var FriendFeedGadget = declare("FriendFeedGadget", [BaseDemoGadget], {
 
-        name: "TwitterGadget",
-        title: "Twitter",
+        name: "FriendFeedGadget",
+        title: "FriendFeed",
+        
+        constructor: function () {
+            this.service = new ServiceFactory().getService(FriendFeedService);
+        },
         
         setupView: function () {
             this.inherited(arguments);
-            var gadgetContainer = domConst.create("div", {"class": "well gadgetFeedContainer"}, this.domNode);
+            var gadgetContainer = domConst.create("div", {"class": "well gadgetFeedContainer friend"}, this.domNode);
             this.container = domConst.create("div", {"class": "gadgetFeed"}, gadgetContainer);
             this.placeHolder = domConst.create("p", {innerHTML: "Requesting data...", style: "display: none"}, gadgetContainer);
         },
@@ -34,16 +40,11 @@ define([
            
             domConst.empty(container);
             this.showPlaceHolder(true);
-        
-            ioScript.get({
-                url: "http://search.twitter.com/search.json",
-                callbackParamName: "callback",
-                content: {
-                    q: searchTerm,
-                },
-                load: function (data) {
-                    // Set the data from the search into the viewbox in nicely formatted JSON
-                    var results = data.results,
+            
+            this.service.getModel({
+                q: searchTerm,
+                callback: function (data) {
+                    var results = data.entries,
                         i = 0,
                         resultContent = '',
                         currResult,
@@ -54,26 +55,22 @@ define([
                     } else {
                         for (i; i < results.length; i += 1) {
                             currResult = results[i];
-                            from = currResult.from_user;
-                            date = new Date(currResult.created_at);
+                            imageUrl = currResult.thumbnails && currResult.thumbnails.length ? currResult.thumbnails[0].url : '';
+                            date = new Date(currResult.date).toString();
                             
                             resultContent += "<div class='tweet'><div class='image'>";
-                            resultContent += "<a href='http://twitter.com/" + from + "'>";
-                            resultContent += "<img src='" + currResult.profile_image_url + "' /></a></div>";
-                            resultContent += "<p>" + currResult.text + "</p>";
-                            resultContent += "<a class='date' href='http://twitter.com/" + from + "/statuses/" + currResult.id_str + "'>" + date + "</a>";
+                            resultContent += "<a href='" + currResult.url + "'>";
+                            resultContent += "<img src='" + imageUrl + "' /></a></div>";
+                            resultContent += "<p>" + currResult.body + "</p>";
+                            resultContent += "<div>" + date.substring(0, 24) + "</div><div>" + currResult.from.name + "</div>";
                             resultContent += "</div>";
                         }
                     }
                     domConst.place(resultContent, container);
                     _this.showPlaceHolder(false);
-                },
-                error: function (error) {
-                    domConst.place("<p>There was a problem accessing Twitter: " + error + "</p>", container);
-                    _this.showPlaceHolder(false);
                 }
             });
         }
     });
-    return TwitterGadget;
+    return FriendFeedGadget;
 });

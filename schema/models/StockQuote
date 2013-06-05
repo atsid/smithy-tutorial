@@ -1,6 +1,6 @@
-define({
-    "id": "schema/ExampleStockModel",
-    "description": "A simple model for a yahoo stock quote",
+{
+    "id": "schema/models/StockQuote",
+    "description": "A simple model for a Yahoo stock quote",
     "$schema": "http://json-schema.org/draft-03/schema",
     "type": "object",
     "properties": {
@@ -60,5 +60,5 @@ define({
             "required": false
         }
     }
-});
+}
 

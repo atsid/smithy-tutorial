@@ -1,0 +1,6 @@
+{
+	"id": "/schema/models/StockNews",
+	"description": "A model of a Yahoo stock news query.",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object"
+}

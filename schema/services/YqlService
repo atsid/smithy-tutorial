@@ -1,4 +1,4 @@
-define({
+{
     "id": "Schema/YqlSchema",
     "SMDVersion": "2.0",
     "$schema": "http://json-schema.org/draft-03/schema",
@@ -43,8 +43,8 @@ define({
             "description": "get a Model.",
             "payload": "",
             "returns": {
-                "$ref": "schema/ExampleStockModel"
+                "$ref": "/schema/models/StockNews"
             }
         }
     }
-});
+}

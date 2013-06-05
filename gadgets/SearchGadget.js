@@ -28,21 +28,27 @@ define([
         defaultValue: "AMZN",
         
         constructor: function (config) {
-            this.ApplicationTitle = (config && config.initData && config.initData.applicationTitle) ||
-                "Search";
-            this.style = config.initData.style;
+            var initData = (config && config.initData) || {};
+            
+            this.ApplicationTitle = initData.applicationTitle || "Search";
+            this.style = initData.style;
         },
         
         setupMessaging: function () {
-            var cfact = this.channelFactory;
+            var cfact = this.channelFactory,
+                gadgetStatusChannel;
+                
             this.searchUpdateChannel = cfact.get("SearchUpdate", this);
+            
+            //subscribe to gadget change messages on the framework channel
+            this.registerFrameworkSubscriber("GadgetSpaceStatusChange", this.gadgetSpaceStatusChange);
         },
         
         /**
          * Set up search form
          */
         setupView: function () {
-            var containerNode, refreshButton, gadgetSearchNode;
+            var containerNode, refreshBtn, gadgetSearchNode;
             
             this.inherited(arguments);
             this.set("content", "<h2 class='gadgetFeedHeader'>" + this.ApplicationTitle + "</h2>");
@@ -57,12 +63,24 @@ define([
 
             refreshBtn = new Button({
                 label: "Search",
+                tabindex: 1,
                 onClick: lang.hitch(this, this.publishSearch)
             }).placeAt(gadgetSearchNode);
+            
+            refreshBtn.focus();
         },
         
         publishSearch: function () {
             this.searchUpdateChannel.publish({searchTerm: this.searchBox.get("value")});
+        },
+        
+        /**
+         * Checks to see if the gadget space has rendered and invokes the search
+         */
+        gadgetSpaceStatusChange: function (message) {
+            if (message.status === 'RENDERED') {
+                this.publishSearch();
+            }
         }
     });
     return SearchGadget;

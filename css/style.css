@@ -14,6 +14,7 @@ h1 {
 
 .gadget {
     padding: 2em;
+	overflow: auto;
 }
 
 .smithyGadget {
@@ -38,7 +39,6 @@ h1 {
 .gadgetFeedContainer {
     min-height: 250px !important;
     min-width: 300px;
-    width: 33%;
 }
 .syllabusGadget {
     background-color: #daedfe;
@@ -76,6 +76,7 @@ h1 {
 	border: 2px solid;
 	position:relative;
 	min-height: 48px;
+	max-width: 400px;
 }
 .tweet .image {
 	float: left;

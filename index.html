@@ -114,18 +114,24 @@
             application.addGadget("NavigationGadget", {
                 gadget: "NavigationGadget"
             });
+			
+			//extended window gadgets
 			application.addGadget("SearchGadget", {
 				gadget: "SearchGadget",
 				data: {applicationTitle: "Search"}
 			});
-
-            application.addGadget("TwitterGadget", {
-                gadget: "TwitterGadget"
+            application.addGadget("FriendFeedGadget", {
+                gadget: "FriendFeedGadget",
+				data: {applicationTitle: "FriendFeed Search"}
             });
-
             application.addGadget("NewsGadget", {
-                data: {applicationTitle: "News Feed"}
+				gadget: "NewsGadget",
+                data: {applicationTitle: "News Search"}
             });
+			application.addGadget("StockGadget", {
+				gadget: "StockGadget",
+                data: {applicationTitle: "Stock Quote"}
+			});
 
             application.addGadget("SyllabusGadget", {
                 gadget: "SyllabusGadget"
@@ -139,9 +145,6 @@
 
 //            application.addGadget("ToolBarGadget", {});
 
-            application.addGadget("StockGadget", {
-                data: {applicationTitle: "Stock Quote"}});
-
             // load gadgets in the first window
             application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
             application.loadGadgetTo("SyllabusGadget", "windows[0]/left", true, {class: "syllabusGadget"});
@@ -150,7 +153,7 @@
 
 //            // load in another window
 			application.loadGadgetTo("SearchGadget", "windows[1]/top", true, {class: "gadget"});
-            application.loadGadgetTo("TwitterGadget", "windows[1]/center/left", true, {class: "gadget"});
+            application.loadGadgetTo("FriendFeedGadget", "windows[1]/center/left", true, {class: "gadget"});
             application.loadGadgetTo("NewsGadget", "windows[1]/center/center", true, {class: "gadget"});
             application.loadGadgetTo("StockGadget", "windows[1]/center/right", true, {class: "gadget"});
 

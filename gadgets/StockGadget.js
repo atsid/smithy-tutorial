@@ -1,12 +1,14 @@
 define([
     "smithy/declare",
     "./BaseDemoGadget",
-    "dojo/io/script",
+    "circuits/ServiceFactory",
+    "amd-plugins/jsonschema!application/schema/services/YqlService",
     "dojo/dom-construct"
 ], function (
     declare,
     BaseDemoGadget,
-    ioScript,
+    ServiceFactory,
+    StockService,
     domConst
 ) {
 
@@ -19,6 +21,10 @@ define([
 
         name: "StockGadget",
         title: "Stock",
+        
+        constructor: function () {
+            this.service = new ServiceFactory().getService(StockService);
+        },
         
         setupView: function () {
             this.inherited(arguments);
@@ -34,19 +40,12 @@ define([
            
             domConst.empty(container);
             this.showPlaceHolder(true);
-        
-            ioScript.get({
-                url: "https://query.yahooapis.com/v1/public/yql",
-                callbackParamName: "callback",
-                content: {
-                    q: "select * from yahoo.finance.quotes where symbol = '" + searchTerm + "'",
-                    format: "json",
-                    env: "store://datatables.org/alltableswithkeys"
-                },
-                load: function (data) {
-                    // Set the data from the search into the viewbox in nicely formatted JSON
+            
+            this.service.getModel({
+                q: "select * from yahoo.finance.quotes where symbol = '" + searchTerm + "'",
+                callback: function (data) {
                     var result = (data.query && data.query.results) ? data.query.results.quote : {},
-                        resultContent = '';
+                    resultContent = '';
 
                     if (!result.Ask) {
                         resultContent += "<div class='smithyGadget'>No results found for " + searchTerm + "</div>";
@@ -69,10 +68,6 @@ define([
                         resultContent += "</div>";
                     }
                     domConst.place(resultContent, container);
-                    _this.showPlaceHolder(false);
-                },
-                error: function (error) {
-                    domConst.place("<p>There was a problem accessing Yahoo: " + error + "</p>", container);
                     _this.showPlaceHolder(false);
                 }
             });
