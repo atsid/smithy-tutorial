@@ -32,12 +32,13 @@ h1 {
     padding: 1em;
 }
 
-.gadgetFeedHeader {
-
+#NewsGadget_0 {
+	max-height: 50%;
+	overflow: auto;
 }
 
 .gadgetFeedContainer {
-    min-height: 250px !important;
+	/*min-height: 250px !important;*/
     min-width: 300px;
 }
 .syllabusGadget {

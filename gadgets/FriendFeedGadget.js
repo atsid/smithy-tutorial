@@ -28,7 +28,7 @@ define([
         
         setupView: function () {
             this.inherited(arguments);
-            var gadgetContainer = domConst.create("div", {"class": "well gadgetFeedContainer friend"}, this.domNode);
+            var gadgetContainer = domConst.create("div", {"class": "well gadgetFeedContainer"}, this.domNode);
             this.container = domConst.create("div", {"class": "gadgetFeed"}, gadgetContainer);
             this.placeHolder = domConst.create("p", {innerHTML: "Requesting data...", style: "display: none"}, gadgetContainer);
         },
@@ -68,6 +68,7 @@ define([
                     }
                     domConst.place(resultContent, container);
                     _this.showPlaceHolder(false);
+                    _this.gadgetSpace.resize();
                 }
             });
         }

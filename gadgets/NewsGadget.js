@@ -48,7 +48,8 @@ define([
                         i = 0, 
                         resultContent = '', 
                         currResult, 
-                        srcUrl, 
+                        srcUrl,
+                        name,
                         content;
 
                     if (!results.length) {
@@ -57,16 +58,19 @@ define([
                         for (i; i < results.length; i += 1) {
                             currResult = results[i];
                             srcUrl = currResult.href;
+                            name = srcUrl.match(/\*.*\/\/(.*?)\//i);
+                            name = name && name.length === 2 ? name[1] : 'Source';
                             content = currResult.content;
                             resultContent += "<div class='smithyGadget'>";
                             resultContent += srcUrl ? "<a href='" + srcUrl + "' title='link to " +
-                                srcUrl + "' target='_blank'>source - </a>" : '';
+                                srcUrl + "' target='_blank'>" + name + " - </a>" : '';
                             resultContent += content;
                             resultContent += "</div>";
                         }
                     }
                     domConst.place(resultContent, container);
                     _this.showPlaceHolder(false);
+                    _this.gadgetSpace.resize();
                 }
             });
         }

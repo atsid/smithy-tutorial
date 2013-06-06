@@ -25,7 +25,7 @@ define([
     
         name: "SearchGadget",
         title: "Search",
-        defaultValue: "AMZN",
+        defaultValue: "TSLA",
         
         constructor: function (config) {
             var initData = (config && config.initData) || {};
@@ -63,11 +63,10 @@ define([
 
             refreshBtn = new Button({
                 label: "Search",
+                type: "button",
                 tabindex: 1,
                 onClick: lang.hitch(this, this.publishSearch)
-            }).placeAt(gadgetSearchNode);
-            
-            refreshBtn.focus();
+            }).placeAt(gadgetSearchNode).focus();
         },
         
         publishSearch: function () {

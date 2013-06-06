@@ -69,6 +69,7 @@ define([
                     }
                     domConst.place(resultContent, container);
                     _this.showPlaceHolder(false);
+                    _this.gadgetSpace.resize();
                 }
             });
         }
