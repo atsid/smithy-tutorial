@@ -9,6 +9,7 @@ define([
     "dijit/_Container",
     "dijit/layout/ContentPane",
     "dojo/dom",
+    "dojo/query",
     "dojo/dom-style",
     "codeview/codeview"
 ], function (
@@ -17,6 +18,7 @@ define([
     Container,
     ContentPane,
     dojoDom,
+    dojoQuery,
     dojoStyle,
     codeview
 ) {
@@ -41,8 +43,14 @@ define([
             this.registerSubscriber("HighlightSource", function (msg) {
                 if (msg.source.indexOf(".htm") !== -1) {
                     that.contentType = "html";
+                } else {
+                    that.contentType = "javascript";
                 }
-                that.set("href", msg.source);
+                if (msg.source) {
+                    that.set("href", msg.source);
+                } else {
+                    that.set("content", "<pre id='codesnippet' class='codeview javascript'>No code to display.</pre>");
+                }
             });
         },
 
@@ -76,7 +84,11 @@ define([
                 node = dojoDom.byId("codesnippet");
 
             dojoStyle.set("codesnippet", style);
-            console.log("resize called: " + this.domNode.offsetWidth);
+            //dojoStyle.set('.iframe', style);
+            var t = dojoQuery("iframe");
+            if (t[0]) {
+                dojoStyle.set(t[0], style);
+            }
         }
     });
 });

@@ -12,6 +12,10 @@
 			"description": "Is this a top level syllabus?",
 			"required": true
         },
+        "order": {
+            "type": "number",
+            "required": true
+        },
 		"title": {
 			"type": "string",
 			"description": "The title of this syllabus or lesson",

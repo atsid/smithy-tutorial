@@ -69,12 +69,16 @@ define([
                     data.forEach(function (val) {
                         val.id = val._id;
                     });
+                    data.sort(function (x, y) {
+                        return x.order - y.order;
+                    });
                     myStore = new Memory({
                             data: data,//[{id: 0, title: "root", isRoot: true}],
                             getChildren: function(object){
                                 return this.query(function (val) {
                                     return (object.lessons && object.lessons.indexOf(val._id) !== -1);
                                 });
+//                                , [{attribute:"order", descending: false}]);
                             }
                         });
 

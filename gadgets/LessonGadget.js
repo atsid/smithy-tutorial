@@ -49,6 +49,9 @@ define([
                 if (msg.selected) {
                     that.TutorialService.getSyllabus({id: msg.lesson}, {
                         load: function (data) {
+                            data.content.sort(function (x, y) {
+                                return x.order - y.order;
+                            });
                             that.pcontent = data.content;
                             that.pcurrent = -1;
                             that.changeContent(true);
@@ -65,17 +68,16 @@ define([
                 pcontent = current < that.pcontent.length ?
                     that.pcontent[current] : {content: "<p>Select a lesson...</p>" };
 
-                    that.previous.set("disabled", current === 0 ? true : false);
+            that.previous.set("disabled", current === 0 ? true : false);
             that.next.set("disabled", current === (that.pcontent.length - 1) ? true : false);
             that.contentPane.set("content", pcontent.content);
+            that.pcurrent = current;
             that.config.area.resize();
-            if (pcontent.sourceFile) {
-                that.pub.HighlightSource({
-                    source: pcontent.sourceFile,
-                    begin: pcontent.highlightBegin,
-                    end: pcontent.highlightEnd
-                })
-            }
+            that.pub.HighlightSource({
+                source: pcontent.sourceFile || "",
+                begin: pcontent.highlightBegin,
+                end: pcontent.highlightEnd
+            })
         },
 
         /**

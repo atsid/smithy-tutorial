@@ -1,0 +1,13 @@
+<script>
+// dojo configuration
+var path = location.pathname.replace(/\/[^/]+$/, '');
+dojoConfig = {
+    async: true,
+    paths: {
+    "schema": "/schema",
+    "application": path === '/' || path === '' ? '' : path + '/'
+    }
+};
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
+

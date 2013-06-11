@@ -37,6 +37,62 @@
                 "$ref": "/schema/models/Syllabus"
             }
         },
+        "getSlimSyllabus": {
+            "transport": "GET",
+            "target": "syllabus/{id}",
+            "description": "Gets a syllabus.",
+            "returns": {
+                "$ref": "/schema/models/Syllabus"
+            }
+        },
+        "updateSyllabus": {
+            "transport": "PUT",
+            "target": "syllabus/{id}",
+            "description": "Save a Syllabus.",
+            "parameters": [
+                  {
+	                   "name": "model",
+                       "payload": "",
+                       "type": {
+                            "$ref": "/schema/models/Syllabus"
+	                   },
+	                   "envelope": "JSON",
+	                   "description": "model payload",
+	                   "required": true
+	              }
+	         ],
+            "returns": {
+                "$ref": "/schema/models/Syllabus"
+            }
+        },
+        "createSyllabus": {
+            "transport": "POST",
+            "target": "syllabus",
+            "description": "create a syllabus.",
+            "parameters": [
+                  {
+	                   "name": "model",
+                       "payload": "",
+                       "type": {
+                            "$ref": "/schema/models/Syllabus"
+	                   },
+	                   "envelope": "JSON",
+	                   "description": "model payload",
+	                   "required": true
+	              }
+	         ],
+            "returns": {
+                "$ref": "/schema/models/Syllabus"
+            }
+        },
+        "deleteSyllabus": {
+            "transport": "DELETE",
+            "target": "syllabus/{id}",
+            "description": "delete a syllabus.",
+            "returns": {
+                "$ref": "/schema/models/Syllabus"
+            }
+        },
         "getLesson": {
             "transport": "GET",
             "target": "populate/lessoncontent/{id}",
@@ -45,10 +101,50 @@
                 "$ref": "/schema/models/LessonContent"
             }
         },
-        "getLessons": {
-            "transport": "GET",
+        "updateLesson": {
+            "transport": "PUT",
+            "target": "lessoncontent/{id}",
+            "description": "Save a lesson.",
+            "parameters": [
+                  {
+	                   "name": "model",
+                       "payload": "",
+                       "type": {
+                            "$ref": "/schema/models/LessonContent"
+	                   },
+	                   "envelope": "JSON",
+	                   "description": "model payload",
+	                   "required": true
+	              }
+	         ],
+            "returns": {
+                "$ref": "/schema/models/LessonContent"
+            }
+        },
+        "createLesson": {
+            "transport": "POST",
             "target": "lessoncontent",
-            "description": "Gets a lesson belonging to a syllabus.",
+            "description": "create a lesson.",
+            "parameters": [
+                  {
+	                   "name": "model",
+                       "payload": "",
+                       "type": {
+                            "$ref": "/schema/models/LessonContent"
+	                   },
+	                   "envelope": "JSON",
+	                   "description": "model payload",
+	                   "required": true
+	              }
+	         ],
+            "returns": {
+                "$ref": "/schema/models/LessonContent"
+            }
+        },
+        "deleteLesson": {
+            "transport": "DELETE",
+            "target": "lessoncontent/{id}",
+            "description": "delete a lesson.",
             "returns": {
                 "$ref": "/schema/models/LessonContent"
             }

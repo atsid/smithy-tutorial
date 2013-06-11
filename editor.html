@@ -5,13 +5,13 @@
     <title>Smithy Tutorial</title>
     <link href="http://thesociable.github.io/dbootstrap/dbootstrap/theme/dbootstrap/dbootstrap.css" rel="stylesheet">
     <link id="applicationStyles" rel="stylesheet" href="css/style.css">
+    <style type="text/css"></style>
     <script>
         // dojo configuration
         var path = location.pathname.replace(/\/[^/]+$/, '');
         dojoConfig = {
             async: true,
             paths: {
-                "codeview": "/lib/js-codeview",
                 "schema": "/schema",
                 "application": path === '/' || path === '' ? '' : path + '/'
             }
@@ -105,56 +105,16 @@
                 useWebStorageForSlag: "session"
             });
 
-            // register gadgets with gadget space.
-            application.addGadget("TitleGadget", {
-                gadget: "TitleGadget",
-                data: {applicationTitle: "Smithy Tutorial"}
-            });
-            application.addGadget("NavigationGadget", {
-                gadget: "NavigationGadget"
-            });
-			
-			//extended window gadgets
-			application.addGadget("SearchGadget", {
-				gadget: "SearchGadget",
-				data: {applicationTitle: "Search"}
-			});
-            application.addGadget("FriendFeedGadget", {
-                gadget: "FriendFeedGadget",
-				data: {applicationTitle: "FriendFeed Search"}
-            });
-            application.addGadget("NewsGadget", {
-				gadget: "NewsGadget",
-                data: {applicationTitle: "News Search"}
-            });
-			application.addGadget("StockGadget", {
-				gadget: "StockGadget",
-                data: {applicationTitle: "Stock Quote"}
-			});
-
             application.addGadget("SyllabusGadget", {
                 gadget: "SyllabusGadget"
             });
-            application.addGadget("LessonGadget", {
-                gadget: "LessonGadget"
+            application.addGadget("LessonEditorGadget", {
+                gadget: "LessonEditorGadget"
             });
-            application.addGadget("CodeViewGadget", {
-                gadget: "CodeViewGadget"
-            });
-
-//            application.addGadget("ToolBarGadget", {});
 
             // load gadgets in the first window
-            //application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
             application.loadGadgetTo("SyllabusGadget", "windows[0]/left", true, {class: "syllabusGadget"});
-            application.loadGadgetTo("LessonGadget", "windows[0]/center/top", true, {class: "syllabusGadget"});
-            application.loadGadgetTo("CodeViewGadget", "windows[0]/center/center", true, {class: "syllabusGadget"});
-
-			// load in another window
-			application.loadGadgetTo("SearchGadget", "windows[1]/top", true, {class: "gadget"});
-            application.loadGadgetTo("FriendFeedGadget", "windows[1]/center/left", true, {class: "gadget"});
-            application.loadGadgetTo("NewsGadget", "windows[1]/center/center/top", true, {class: "gadget"});
-            application.loadGadgetTo("StockGadget", "windows[1]/center/center/bottom", true, {class: "gadget"});
+            application.loadGadgetTo("LessonEditorGadget", "windows[0]/center", true, {class: "syllabusGadget"});
 
             // render app
             application.render();
