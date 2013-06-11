@@ -110,10 +110,7 @@
                 gadget: "TitleGadget",
                 data: {applicationTitle: "Smithy Tutorial"}
             });
-            application.addGadget("NavigationGadget", {
-                gadget: "NavigationGadget"
-            });
-			
+
 			//extended window gadgets
 			application.addGadget("SearchGadget", {
 				gadget: "SearchGadget",
@@ -142,10 +139,7 @@
                 gadget: "CodeViewGadget"
             });
 
-//            application.addGadget("ToolBarGadget", {});
-
             // load gadgets in the first window
-            //application.loadGadgetTo("TitleGadget", "windows[0]/top", true);
             application.loadGadgetTo("SyllabusGadget", "windows[0]/left", true, {class: "syllabusGadget"});
             application.loadGadgetTo("LessonGadget", "windows[0]/center/top", true, {class: "syllabusGadget"});
             application.loadGadgetTo("CodeViewGadget", "windows[0]/center/center", true, {class: "syllabusGadget"});
