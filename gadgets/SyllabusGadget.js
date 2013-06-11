@@ -78,7 +78,6 @@ define([
                                 return this.query(function (val) {
                                     return (object.lessons && object.lessons.indexOf(val._id) !== -1);
                                 });
-//                                , [{attribute:"order", descending: false}]);
                             }
                         });
 
@@ -95,14 +94,19 @@ define([
 
                     that.addChild(tree);
                     tree.startup();
-                    that.config.area.resize();
-                    tree.on("click", function (item, node, evt) {
+                    tree.expandAll();
+                    function itemSelected(item, node, evt) {
                         if (that.lastSelected && item !== that.lastSelected) {
                             that.pub.LessonSelect({selected: false, lesson:that.lastSelected._id});
                         }
                         that.lastSelected = item;
                         that.pub.LessonSelect({selected: true, lesson:item._id});
+                    }
+                    tree.set("selectedItems", [myModel.root.id]).then(function (val) {
+                        itemSelected(myModel.root);
+                        that.config.area.resize();
                     });
+                    tree.on("click", itemsSelected);
                 }
             });
         }
