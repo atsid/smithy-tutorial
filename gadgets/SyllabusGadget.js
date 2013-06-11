@@ -106,7 +106,7 @@ define([
                         itemSelected(myModel.root);
                         that.config.area.resize();
                     });
-                    tree.on("click", itemsSelected);
+                    tree.on("click", itemSelected);
                 }
             });
         }
