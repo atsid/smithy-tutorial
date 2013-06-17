@@ -23,7 +23,10 @@ define([
         title: "Stock",
         
         constructor: function () {
-            this.service = new ServiceFactory().getService(StockService);
+        },
+
+        setupServices: function () {
+            this.registerService(StockService);
         },
         
         setupView: function () {
@@ -41,7 +44,7 @@ define([
             domConst.empty(container);
             this.showPlaceHolder(true);
             
-            this.service.getModel({
+            this.YqlSchema.getModel({
                 q: "select * from yahoo.finance.quotes where symbol = '" + searchTerm + "'",
                 callback: function (data) {
                     var result = (data.query && data.query.results) ? data.query.results.quote : {},

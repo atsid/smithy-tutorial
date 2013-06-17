@@ -3,7 +3,7 @@ require([
     "circuits/ServiceFactory",
     "circuits/plugins/HandlerPlugin",
     "schema/ExampleService",
-    "schema/ExampleStockModel"
+    "schema/ExampleModel"
 ], function (
     ServiceFactory,
     HandlerPlugin,
@@ -15,9 +15,9 @@ require([
             // "resolver" is used by the factory to find schemas based on names.
             // resolve schema by mapping it to the dependency where it was already loaded.
             resolver: function (name) {
-                if (name === "schema/YqlSchema") {
+                if (name === "schema/ExampleSchema") {
                     return ExampleService;
-                } else if (name === "schema/ExampleStockModel") {
+                } else if (name === "schema/ExampleModel") {
                     return ExampleModel;
                 }
             }
@@ -26,7 +26,7 @@ require([
         btn = document.getElementsByName("CallService")[0],
 
     // Get a service based on the SMD.
-        service = sfact.getServiceByName("schema/YqlSchema");
+        service = sfact.getServiceByName("schema/ExampleSchema");
 
     // Call service and handle returned data.
     btn.onclick = function (evt) {
