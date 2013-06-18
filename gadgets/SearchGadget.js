@@ -5,6 +5,8 @@ define([
     "dijit/form/Button",
     "dijit/form/TextBox",
     "dojo/dom-construct",
+    "dojo/keys",
+    "dojo/on",
     "dojo/_base/lang"
 ], function (
     declare,
@@ -13,6 +15,8 @@ define([
     Button,
     TextBox,
     domConst,
+    keys,
+    on,
     lang
 ) {
 
@@ -48,29 +52,39 @@ define([
          * Set up search form
          */
         setupView: function () {
-            var containerNode, refreshBtn, gadgetSearchNode;
+            var containerNode, 
+                gadgetSearchNode,
+                seachBox,
+                _this = this;
             
             this.inherited(arguments);
             this.set("content", "<h2 class='gadgetFeedHeader'>" + this.ApplicationTitle + "</h2>");
             
             gadgetSearchNode = domConst.create("div", {"class": "gadgetSearch"}, this.domNode);
-            this.searchBox = new TextBox({
+            this.searchBox = searchBox = new TextBox({
                 label: "Search Term",
                 placeHolder: "Search",
                 value: this.defaultValue,
+                selectOnClick: true,
                 style: "padding: 0em 1em;"
-            }).placeAt(gadgetSearchNode);
+            }).placeAt(gadgetSearchNode)
+            searchBox.on("keyPress", function (e) {
+                if (e.keyCode === keys.ENTER) {
+                    _this.publishSearch();
+                }
+            });
 
-            refreshBtn = new Button({
+            new Button({
                 label: "Search",
-                type: "button",
-                tabindex: 1,
+                type: "submit",
                 onClick: lang.hitch(this, this.publishSearch)
-            }).placeAt(gadgetSearchNode).focus();
+            }).placeAt(gadgetSearchNode);
         },
         
         publishSearch: function () {
             this.searchUpdateChannel.publish({searchTerm: this.searchBox.get("value")});
+            this.searchBox.focus();
+            this.searchBox.focusNode.select();
         },
         
         /**

@@ -1,5 +1,5 @@
 {
-    "id": "Schema/YqlSchema",
+    "id": "schema/services/YqlService",
     "SMDVersion": "2.0",
     "$schema": "http://json-schema.org/draft-03/schema",
     "transport": "JSONP",
@@ -43,7 +43,7 @@
             "description": "get a Model.",
             "payload": "",
             "returns": {
-                "$ref": "/schema/models/StockNews"
+                "$ref": "/schema/models/GenericJsonp"
             }
         }
     }

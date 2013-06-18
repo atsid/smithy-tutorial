@@ -44,8 +44,8 @@ define([
             domConst.empty(container);
             this.showPlaceHolder(true);
             
-            this.YqlSchema.getModel({
-                q: "select * from yahoo.finance.quotes where symbol = '" + searchTerm + "'",
+            this.YqlService.getModel({
+                    q: "select * from yahoo.finance.quotes where symbol = '" + searchTerm + "'",
                 },
                 {
                     load: function (data) {
@@ -75,8 +75,14 @@ define([
                         domConst.place(resultContent, container);
                         _this.showPlaceHolder(false);
                         _this.gadgetSpace.resize();
+                    },
+                    error: function (err) {
+                        var err = "<div class='smithyGadget'>There was an error on a jsonpRequest: " + err.message + "</div>";
+                        domConst.place(err, container);
+                        _this.showPlaceHolder(false);
                     }
-            });
+                }
+            );
         }
     });
     return StockGadget;

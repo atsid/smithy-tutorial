@@ -23,7 +23,7 @@ define([
         title: "News",
         
         constructor: function () {
-            this.service = new ServiceFactory().getService(NewsService);
+            this.registerService(NewsService);
         },
         
         setupView: function () {
@@ -41,7 +41,7 @@ define([
             domConst.empty(container);
             this.showPlaceHolder(true);
             
-            this.service.getModel({
+            this.YqlService.getModel({
                     q: "select * from html where url=\"http://finance.yahoo.com/q?s=" + searchTerm + "\" and xpath='//div[@id=\"yfi_headlines\"]/div[2]/ul/li/a' limit 5"
                 },
                 {
@@ -73,8 +73,14 @@ define([
                         domConst.place(resultContent, container);
                         _this.showPlaceHolder(false);
                         _this.gadgetSpace.resize();
+                    },
+                        error: function (err) {
+                        var err = "<div class='smithyGadget'>There was an error on a jsonpRequest: " + err.message + "</div>";
+                        domConst.place(err, container);
+                        _this.showPlaceHolder(false);
                     }
-            });
+                }
+            );
         }
     });
     return NewsGadget;

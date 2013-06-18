@@ -146,9 +146,9 @@
 
 			// load in another window
 			application.loadGadgetTo("SearchGadget", "windows[1]/top", true, {class: "gadget"});
-            application.loadGadgetTo("FriendFeedGadget", "windows[1]/center/left", true, {class: "gadget"});
-            application.loadGadgetTo("NewsGadget", "windows[1]/center/center/top", true, {class: "gadget"});
-            application.loadGadgetTo("StockGadget", "windows[1]/center/center/bottom", true, {class: "gadget"});
+            application.loadGadgetTo("FriendFeedGadget", "windows[1]/left", true, {class: "gadget"});
+            application.loadGadgetTo("NewsGadget", "windows[1]/center/center", true, {class: "gadget", style: "height:55%;"});
+            application.loadGadgetTo("StockGadget", "windows[1]/center/bottom", true, {class: "gadget"});
 
             // render app
             application.render();

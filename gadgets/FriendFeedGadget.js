@@ -23,7 +23,7 @@ define([
         title: "FriendFeed",
         
         constructor: function () {
-            this.service = new ServiceFactory().getService(FriendFeedService);
+            this.registerService(FriendFeedService);
         },
         
         setupView: function () {
@@ -41,7 +41,7 @@ define([
             domConst.empty(container);
             this.showPlaceHolder(true);
             
-            this.service.getModel({
+            this.FriendFeedService.getModel({
                     q: searchTerm
                 },
                 {
@@ -57,7 +57,7 @@ define([
                         } else {
                             for (i; i < results.length; i += 1) {
                                 currResult = results[i];
-                                imageUrl = currResult.thumbnails && currResult.thumbnails.length ? currResult.thumbnails[0].url : '';
+                                imageUrl = currResult.thumbnails && currResult.thumbnails.length ? currResult.thumbnails[0].url : '../css/images/default.png';
                                 date = new Date(currResult.date).toString();
 
                                 resultContent += "<div class='tweet'><div class='image'>";
@@ -71,6 +71,11 @@ define([
                         domConst.place(resultContent, container);
                         _this.showPlaceHolder(false);
                         _this.gadgetSpace.resize();
+                    },
+                    error: function (err) {
+                        var err = "<div class='smithyGadget'>There was an error on a jsonpRequest: " + err.message + "</div>";
+                        domConst.place(err, container);
+                        _this.showPlaceHolder(false);
                     }
                 }
             );
