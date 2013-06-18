@@ -42,36 +42,38 @@ define([
             this.showPlaceHolder(true);
             
             this.service.getModel({
-                q: "select * from html where url=\"http://finance.yahoo.com/q?s=" + searchTerm + "\" and xpath='//div[@id=\"yfi_headlines\"]/div[2]/ul/li/a' limit 5",
-                callback: function (data) {
-                    var results = (data.query && data.query.results) ? data.query.results.a : [], 
-                        i = 0, 
-                        resultContent = '', 
-                        currResult, 
-                        srcUrl,
-                        name,
-                        content;
+                    q: "select * from html where url=\"http://finance.yahoo.com/q?s=" + searchTerm + "\" and xpath='//div[@id=\"yfi_headlines\"]/div[2]/ul/li/a' limit 5"
+                },
+                {
+                    load: function (data) {
+                        var results = (data.query && data.query.results) ? data.query.results.a : [],
+                            i = 0,
+                            resultContent = '',
+                            currResult,
+                            srcUrl,
+                            name,
+                            content;
 
-                    if (!results.length) {
-                        resultContent += "<div class='smithyGadget'>No results found for " + searchTerm + "</div>";
-                    } else {
-                        for (i; i < results.length; i += 1) {
-                            currResult = results[i];
-                            srcUrl = currResult.href;
-                            name = srcUrl.match(/\*.*\/\/(.*?)\//i);
-                            name = name && name.length === 2 ? name[1] : 'Source';
-                            content = currResult.content;
-                            resultContent += "<div class='smithyGadget'>";
-                            resultContent += srcUrl ? "<a href='" + srcUrl + "' title='link to " +
-                                srcUrl + "' target='_blank'>" + name + " - </a>" : '';
-                            resultContent += content;
-                            resultContent += "</div>";
+                        if (!results.length) {
+                            resultContent += "<div class='smithyGadget'>No results found for " + searchTerm + "</div>";
+                        } else {
+                            for (i; i < results.length; i += 1) {
+                                currResult = results[i];
+                                srcUrl = currResult.href;
+                                name = srcUrl.match(/\*.*\/\/(.*?)\//i);
+                                name = name && name.length === 2 ? name[1] : 'Source';
+                                content = currResult.content;
+                                resultContent += "<div class='smithyGadget'>";
+                                resultContent += srcUrl ? "<a href='" + srcUrl + "' title='link to " +
+                                    srcUrl + "' target='_blank'>" + name + " - </a>" : '';
+                                resultContent += content;
+                                resultContent += "</div>";
+                            }
                         }
+                        domConst.place(resultContent, container);
+                        _this.showPlaceHolder(false);
+                        _this.gadgetSpace.resize();
                     }
-                    domConst.place(resultContent, container);
-                    _this.showPlaceHolder(false);
-                    _this.gadgetSpace.resize();
-                }
             });
         }
     });
