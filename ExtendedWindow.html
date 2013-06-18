@@ -11,19 +11,17 @@
         dojoConfig = {
             async: true,
             paths: {
-                "circuits": "//napalm.atsid.cloudbees.net/circuits-js/1.0.5",
                 "schema": "/schema",
                 "application": path === '/' || path === '' ? '' : path + '/'
             }
         };
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
-    <script src="//napalm.atsid.cloudbees.net/amd-plugins/1.0.9/amd-plugins-1.0.9-min.js"></script>
-    <script src="//napalm.atsid.cloudbees.net/smithy-js/0.1.4/smithy-0.1.4-min.js"></script>
-    <script src="//napalm.atsid.cloudbees.net/bullhorn-js/1.0.2/bullhorn-1.0.2-min.js"></script>
-    <!--script src="//napalm.atsid.cloudbees.net/circuits-js/1.0.4/circuits-1.0.4-min.js"></script-->
-    <!--script src="//napalm.atsid.cloudbees.net/circuits-js/1.0.5/min.js"></script-->
-    <script src="//napalm.atsid.cloudbees.net/schematic-js/1.0.2/schematic-1.0.2-min.js"></script>
+    <script src="//atsid.github.io/releases/amd-plugins-1.0.9-min.js"></script>
+    <script src="//atsid.github.io/releases/smithy-0.1.6-min.js"></script>
+    <script src="//atsid.github.io/releases/bullhorn-1.0.2-min.js"></script>
+    <script src="//atsid.github.io/releases/circuits-1.0.5-min.js"></script>
+    <script src="//atsid.github.io/releases/schematic-1.0.2-min.js"></script>
     <script>
         require([
             "application/Gadgets",
