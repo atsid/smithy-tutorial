@@ -7,6 +7,10 @@ html, body {
 h1 {
     text-align: center;
 }
+h2 {
+    white-space: nowrap;
+    overflow: hidden;
+}
 #borderContainer {
     width: 100%;
     height: 100%;
@@ -32,9 +36,9 @@ h1 {
     padding: 1em;
 }
 
-#NewsGadget_0 {
-	max-height: 50%;
+#NewsGadget_0, #StockGadget_0  {
 	overflow: auto;
+    overflow-x: hidden;
 }
 
 .gadgetFeedContainer {

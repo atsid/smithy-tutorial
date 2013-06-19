@@ -1,5 +1,5 @@
 {
-	"id": "/schema/models/FriendFeed",
+	"id": "/schema/models/GenericJsonp",
 	"description": "A model of a FriendFeed search query.",
 	"$schema": "http://json-schema.org/draft-03/schema",
 	"type": "object"
