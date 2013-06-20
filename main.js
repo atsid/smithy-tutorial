@@ -10,9 +10,9 @@ var express = require('express')
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
-//app.get("/editor.html", function(req, res) {
-//    res.send("Not Now...");
-//});
+app.get("/editor.html", function(req, res) {
+    res.send("Not Now...");
+});
 app.use(express.static(__dirname));
 
 restsmd(app, {

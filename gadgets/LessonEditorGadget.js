@@ -171,6 +171,7 @@ define([
                         newContent = util.mixin({}, that.syllabus);
                         delete newContent._id;
                         newContent.content = [data._id];
+                        newContent.lessons = [];
                         newContent.title = that.sourceFile.get("value");
                         newContent.order = that.order.get("value");
                         that.TutorialService.createSyllabus({payload: newContent}, {
