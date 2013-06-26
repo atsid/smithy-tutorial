@@ -39,10 +39,7 @@ define([
         },
         
         setupMessaging: function () {
-            var cfact = this.channelFactory,
-                gadgetStatusChannel;
-                
-            this.searchUpdateChannel = cfact.get("SearchUpdate", this);
+            this.registerPublisher("SearchUpdate");
             
             //subscribe to gadget change messages on the framework channel
             this.registerFrameworkSubscriber("GadgetSpaceStatusChange", this.gadgetSpaceStatusChange);
@@ -82,7 +79,7 @@ define([
         },
         
         publishSearch: function () {
-            this.searchUpdateChannel.publish({searchTerm: this.searchBox.get("value")});
+            this.pub.SearchUpdate({searchTerm: this.searchBox.get("value")});
             this.searchBox.focus();
             this.searchBox.focusNode.select();
         },
