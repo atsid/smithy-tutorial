@@ -22,9 +22,6 @@ define([
         name: "StockGadget",
         title: "Stock",
         
-        constructor: function () {
-        },
-
         setupServices: function () {
             this.registerService(StockService);
         },

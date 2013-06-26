@@ -22,7 +22,7 @@ define([
         name: "FriendFeedGadget",
         title: "FriendFeed",
         
-        constructor: function () {
+        setupServices: function () {
             this.registerService(FriendFeedService);
         },
         

@@ -1,13 +1,11 @@
 define([
     "smithy/declare",
     "smithy/Gadget",
-    "dijit/layout/ContentPane",
-    "dojo/dom-construct"
+    "dijit/layout/ContentPane"
 ], function (
     declare,
     Gadget,
-    ContentPane,
-    domConst
+    ContentPane
 ) {
 
     /**
@@ -33,9 +31,7 @@ define([
         },
 
         setupMessaging: function () {
-            var cfact = this.channelFactory;
-            this.searchUpdateChannel = cfact.get("SearchUpdate", this);
-            this.searchUpdateChannel.subscribe(this.updateSearch);
+            this.registerSubscriber("SearchUpdate", this.updateSearch);
         },
         
         updateSearch: function (message) {},
@@ -46,7 +42,7 @@ define([
          */
         showPlaceHolder: function (show) {
             this.placeHolder.style.display = show ? "block" : "none";
-        },
+        }
     });
     return BaseDemoGadget;
 });

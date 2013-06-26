@@ -10,7 +10,7 @@ module.exports = function (app, config) {
 
     var mongooseConnection = mongoose.connect(config.mongoInstance);
 
-// Generate Mongoose schema for each SMD file in 'services' directory
+// load the mongoose schemas.
     fs.readdir(config.appDir + config.modelDir, function(err, files) {
         if (err) throw err;
         files.forEach(function(file) {

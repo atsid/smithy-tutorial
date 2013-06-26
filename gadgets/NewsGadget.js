@@ -22,7 +22,7 @@ define([
         name: "NewsGadget",
         title: "News",
         
-        constructor: function () {
+        setupServices: function () {
             this.registerService(NewsService);
         },
         

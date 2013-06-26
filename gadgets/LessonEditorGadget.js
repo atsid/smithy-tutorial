@@ -164,16 +164,17 @@ define([
             this.newLesson.on("click", function (evt) {
                 var newContent = util.mixin({}, that.pcontent);
                 newContent.content = that.editor.get("value");
-                newContent.order = 0
+                newContent.order = 0;
                 delete newContent._id;
                 that.TutorialService.createLesson({payload: newContent}, {
                     load: function (data) {
                         newContent = util.mixin({}, that.syllabus);
                         delete newContent._id;
                         newContent.content = [data._id];
+                        newContent.isRoot = false;
                         newContent.lessons = [];
                         newContent.title = that.sourceFile.get("value");
-                        newContent.order = that.order.get("value");
+                        newContent.order = that.sybOrder.get("value");
                         that.TutorialService.createSyllabus({payload: newContent}, {
                             load: function (data) {
                                 that.syllabus.lessons.push(data._id);

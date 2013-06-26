@@ -18,7 +18,7 @@
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
     <script src="//atsid.github.io/releases/amd-plugins-1.0.9-min.js"></script>
-    <script src="//atsid.github.io/releases/smithy-0.1.6-min.js"></script>
+    <script src="//atsid.github.io/releases/smithy-0.1.7-min.js"></script>
     <script src="//atsid.github.io/releases/bullhorn-1.0.2-min.js"></script>
     <script src="//atsid.github.io/releases/circuits-1.0.5-min.js"></script>
     <script src="//atsid.github.io/releases/schematic-1.0.2-min.js"></script>
@@ -127,10 +127,10 @@
 			});
 
             // load gadgets into main window.
-			application.loadGadgetTo("SearchGadget", "windows[0]/top", true, {class: "gadget"});
-            application.loadGadgetTo("FriendFeedGadget", "windows[0]/center/left", true, {class: "gadget"});
-            application.loadGadgetTo("NewsGadget", "windows[0]/center/center/top", true, {class: "gadget"});
-            application.loadGadgetTo("StockGadget", "windows[0]/center/center/bottom", true, {class: "gadget"});
+            application.loadGadgetTo("SearchGadget", "windows[0]/top", true, {class: "gadget"});
+            application.loadGadgetTo("FriendFeedGadget", "windows[0]/left", true, {class: "gadget"});
+            application.loadGadgetTo("NewsGadget", "windows[0]/center/center", true, {class: "gadget", style: "height:55%;"});
+            application.loadGadgetTo("StockGadget", "windows[0]/center/bottom", true, {class: "gadget"});
 
             // render app
             application.render();
