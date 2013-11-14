@@ -11,4 +11,4 @@ npm main; // to run the express app
 
 http://host:3000 // to access the app locally.
 
-
+[See the running tutorial](http://smithy-tutoria.atsid.cloudbees.net)
