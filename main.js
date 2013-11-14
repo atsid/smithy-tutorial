@@ -8,7 +8,7 @@ var express = require('express')
   , path = require('path');
 
 var app = express();
-
+console.log("db - " + process.env.mongoinstance);
 app.set('port', process.env.PORT || 3000);
 app.get("/editor.html", function(req, res) {
     res.send("Not Now...");
@@ -16,8 +16,7 @@ app.get("/editor.html", function(req, res) {
 app.use(express.static(__dirname));
 
 restsmd(app, {
-    mongoInstance: "mongodb://cloudbees:dba69a3b8d21d8f16c1393935dbab7bf@alex.mongohq.com:10018/BYe5thvosvLkf8H88k10Tg",
-//    mongoInstance: "mongodb://localhost",
+    mongoInstance: process.env.mongoinstance,
     modelDir: "./schema/models/mongoose",
     appDir: process.cwd() + '/'
 });
