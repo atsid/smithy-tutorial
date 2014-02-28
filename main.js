@@ -13,13 +13,21 @@ app.set('port', process.env.PORT || 3000);
 app.get("/editor.html", function(req, res) {
     res.send("Not Now...");
 });
-app.use(express.static(__dirname));
 
-restsmd(app, {
-    mongoInstance: process.env.mongoinstance,
-    modelDir: "./schema/models/mongoose",
-    appDir: process.cwd() + '/'
-});
+// if there isn't a mongo instance then serve up
+// the demo-only page as root.
+if (process.env.mongoinstance) {
+    restsmd(app, {
+        mongoInstance: process.env.mongoinstance,
+        modelDir: "./schema/models/mongoose",
+        appDir: process.cwd() + '/'
+    });
+} else {
+    app.get("/", function(req, res) {
+        res.sendfile("demo-only.html");
+    });
+}
+app.use(express.static(__dirname));
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
