@@ -8,7 +8,7 @@ var express = require('express')
   , path = require('path');
 
 var app = express();
-console.log("db - " + process.env.mongoinstance);
+console.log("db - " + process.env.PARAM1);
 app.set('port', process.env.PORT || 3000);
 app.get("/editor.html", function(req, res) {
     res.send("Not Now...");
@@ -16,9 +16,9 @@ app.get("/editor.html", function(req, res) {
 
 // if there isn't a mongo instance then serve up
 // the demo-only page as root.
-if (process.env.mongoinstance) {
+if (process.env.PARAM1) {
     restsmd(app, {
-        mongoInstance: process.env.mongoinstance,
+        mongoInstance: process.env.PARAM1,
         modelDir: "./schema/models/mongoose",
         appDir: process.cwd() + '/'
     });
