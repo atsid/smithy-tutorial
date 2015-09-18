@@ -1,0 +1,24 @@
+language: node_js
+
+sudo: false
+
+node_js:
+- '0.10'
+- '0.12'
+
+script:
+- npm test
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id:
+    secure: cK1SSRiA00de1W6ORE70Xh9ATIsBMAMeYwVFmayAZp/O7ZeHztuASplN9JT3Ss8Lj2fqZQvFe2//9wWAubmjlIdwqQ97/TAr+tlU/j9oGf88E+9VsotbyhMHdUeApl26misoip7OtmS+wqu+RRicRVaAAtostwPbGHOUovno2Nw=
+  secret_access_key:
+    secure: mjLwC+GGxZHrf4DHVMYa11N/2LGGDsolOEomKV28ApmQ0JMdvdUIQv1sye8NSerMdczN/b3cRIyCt1vpb42eGgxZUplCdpMXyUf79U8s+OxbN/OaWhnm+cLqu41hTFeTOmx4IryJFDJ2073sGYURyDxabv31u/mj5hD/az6O6ow=
+  region: us-west-2
+  app: oss-demos
+  env: smithy-tutorial
+  bucket_name: elasticbeanstalk-us-west-2-943291351674
+  on:
+    repo: atsid/smithy-tutorial
+    branch: master
