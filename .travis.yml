@@ -18,7 +18,7 @@ deploy:
   region: us-west-2
   app: oss-demos
   env: smithy-tutorial
-  bucket_name: elasticbeanstalk-us-west-2-943291351674
+  bucket_name: ats-travis/smithy-tutorial/build$TRAVIS_BUILD_NUMBER
   on:
     repo: atsid/smithy-tutorial
     branch: master
