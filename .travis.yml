@@ -21,3 +21,4 @@ deploy:
   on:
     repo: atsid/smithy-tutorial
     branch: master
+    node: '0.10'
