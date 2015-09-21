@@ -17,7 +17,8 @@ deploy:
   region: us-west-2
   app: oss-demos
   env: smithy-tutorial
-  bucket_name: ats-travis/smithy-tutorial/build$TRAVIS_BUILD_NUMBER
+  bucket_name: ats-travis
+  bucket_path: smithy-tutorial
   on:
     repo: atsid/smithy-tutorial
     branch: master
