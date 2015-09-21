@@ -1,0 +1,25 @@
+language: node_js
+
+sudo: false
+
+node_js:
+- '0.10'
+- '0.12'
+- '4.0'
+
+script:
+- npm test
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_KEY
+  region: us-west-2
+  app: oss-demos
+  env: smithy-tutorial
+  bucket_name: ats-travis
+  bucket_path: smithy-tutorial
+  on:
+    repo: atsid/smithy-tutorial
+    branch: master
+    node: '0.10'
