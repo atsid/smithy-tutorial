@@ -109,22 +109,25 @@
                 gadget: "TitleGadget",
                 data: {applicationTitle: "Smithy Tutorial"}
             });
-			application.addGadget("SearchGadget", {
-				gadget: "SearchGadget",
-				data: {applicationTitle: "Search"}
-			});
+	    
+	    application.addGadget("SearchGadget", {
+	        gadget: "SearchGadget",
+		data: {applicationTitle: "Search"}
+	    });
+            
             application.addGadget("FriendFeedGadget", {
                 gadget: "FriendFeedGadget",
-				data: {applicationTitle: "FriendFeed Search"}
+		data: {applicationTitle: "FriendFeed Search"}
             });
             application.addGadget("NewsGadget", {
-				gadget: "NewsGadget",
+		gadget: "NewsGadget",
                 data: {applicationTitle: "News Search"}
             });
-			application.addGadget("StockGadget", {
-				gadget: "StockGadget",
+	     
+	    application.addGadget("StockGadget", {
+		gadget: "StockGadget",
                 data: {applicationTitle: "Stock Quote"}
-			});
+	    });
 
             // load gadgets into main window.
             application.loadGadgetTo("SearchGadget", "windows[0]/top", true, {class: "gadget"});
