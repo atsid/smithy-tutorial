@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/atsid/smithy-tutorial.svg?branch=master)](https://travis-ci.org/atsid/smithy-tutorial)
+[![Dependency Status](https://david-dm.org/atsid/smithy-tutorial.svg)](https://david-dm.org/atsid/smithy-tutorial)
+[![Dev Dependency Status](https://david-dm.org/atsid/smithy-tutorial/dev-status.svg)](https://david-dm.org/atsid/smithy-tutorial)
+
 smithy-tutorial
 ===============
 
